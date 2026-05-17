@@ -1,0 +1,50 @@
+/* Main CSS File - Imports all partials */
+
+@import 'variables';
+@import 'header';
+@import 'hero';
+@import 'categories';
+@import 'recipes';
+@import 'modal';
+@import 'utilities';
+
+/* Additional global styles can go here */
+body {
+    margin: 0;
+    padding-top: 100px; /* Add padding to prevent content from being hidden behind fixed header */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-color);
+    overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+        font-size: 12pt;
+    }
+    
+    a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Cooking Boss</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <link rel="stylesheet" href="css/_modal.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="css/_about.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Formspree CSS (optional, for basic styling) -->
+  </head>
+  <body>
+    <!-- Header -->
+    <div id="app-header"></div>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+      <div class="animate-fadeInUp">
+        <h1>About Cooking Boss</h1>
+        <p>
+          Discover the passionate team behind your favorite recipe platform and
+          get in touch with us
+        </p>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+      <div class="about-container">
+        <h2 class="section-title">Meet Our Team</h2>
+        <div class="team-grid">
+          <!-- Main Developer -->
+          <div
+            class="developer-card animate-fadeInUp"
+            style="
+              animation-delay: 0.2s;
+              border: 2px solid var(--primary-color);
+              box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15);
+            "
+          >
+            <div style="position: relative">
+              <img
+                src="https://ui-avatars.com/api/?name=Ahmed+Ali&background=ff6b6b&color=fff&size=200"
+                alt="Ahmed Ali"
+                class="developer-image"
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: -10px;
+                  right: -10px;
+                  background: var(--primary-color);
+                  color: white;
+                  border-radius: 50%;
+                  width: 40px;
+                  height: 40px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 1.2rem;
+                "
+              >
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+            <h3>Ahmed Ali</h3>
+            <span
+              class="developer-role"
+              style="color: var(--primary-color); font-weight: 600"
+              >Lead Developer & Founder</span>
+            <p class="developer-bio">
+              Developer with a passion for creating beautiful and functional web experiences. 
+              With expertise in modern JavaScript frameworks and a keen eye for design, I bring ideas 
+              to life through clean, efficient code. When not coding, you can find me experimenting 
+              with new recipes in the kitchen or exploring the latest web technologies.
+            </p>
+            <div class="social-links">
+              <a href="https://github.com/ahmedali" target="_blank" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
+              <a href="https://twitter.com/ahmedali" target="_blank" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="https://linkedin.com/in/ahmedali" target="_blank" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="mailto:ahmed.ali@cookingboss.com" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+
+          <!-- Developer 2 -->
+          <div class="developer-card animate-fadeInUp" style="animation-delay: 0.4s">
+            <img 
+              src="https://ui-avatars.com/api/?name=Mubashir&background=4ecdc4&color=fff&size=200" 
+              alt="Mubashir" 
+              class="developer-image"
+              onerror="this.src='https://ui-avatars.com/api/?name=Mubashir&background=4ecdc4&color=fff&size=200';"
+            >
+            <h3>Mubashir</h3>
+            <span class="developer-role">Backend Developer</span>
+            <p class="developer-bio">Backend specialist and database architect. Ensures everything runs smoothly behind the scenes with efficient and scalable code.</p>
+            <div class="social-links">
+              <a href="https://github.com/mubashirahmed" target="_blank" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
+              <a href="https://stackoverflow.com/users/mubashirahmed" target="_blank" aria-label="Stack Overflow" title="Stack Overflow"><i class="fab fa-stack-overflow"></i></a>
+              <a href="https://linkedin.com/in/mubashirahmed" target="_blank" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="mailto:mubashir@cookingboss.com" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section">
+      <div class="about-container">
+        <h2 class="section-title">Our Expertise</h2>
+        <div class="skills-container">
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">Web Development</span>
+              <span class="skill-percent">95%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="95"></div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">UI/UX Design</span>
+              <span class="skill-percent">90%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="90"></div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">Mobile Responsiveness</span>
+              <span class="skill-percent">98%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="98"></div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">Performance Optimization</span>
+              <span class="skill-percent">92%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="92"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="about-container">
+        <h2 class="section-title">Get In Touch</h2>
+
+        <div class="contact-info">
+          <div
+            class="contact-card animate-fadeInUp"
+            style="animation-delay: 0.2s"
+          >
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3>Our Location</h3>
+            <text class="contact-text locate">
+              Karachi, Pakistan
+            </text>
+          </div>
+
+          <div
+            class="contact-card animate-fadeInUp"
+            style="animation-delay: 0.4s"
+          >
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h3>Email Us</h3>
+            <text class="contact-text locate">
+              cookingboss@gmail.com
+            </text>
+          </div>
+
+          <div
+            class="contact-card animate-fadeInUp"
+            style="animation-delay: 0.6s"
+          >
+            <div class="contact-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <h3>Call Us</h3>
+            <text class="contact-text locate">
+              +923702629117<br />Mon - Fri, 9:00 AM - 6:00 PM
+            </text>
+          </div>
+        </div>
+
+        <form
+          id="contactForm"
+          class="contact-form animate-fadeInUp"
+          action="https://formspree.io/f/xnnebjpa"
+          method="POST"
+          style="animation-delay: 0.8s"
+        >
+          <div id="formMessage" class="form-message"></div>
+
+          <div
+            class="form-row"
+            style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem"
+          >
+            <div class="form-group" style="flex: 1">
+              <label for="name">Your Name *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group" style="flex: 1">
+              <label for="email">Your Email *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Your Message *</label>
+            <textarea
+              id="message"
+              name="message"
+              class="form-control"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group" style="text-align: center">
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane" style="margin-right: 8px"></i> Send
+              Message
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <!-- Formspree Form Handling -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contactForm');
+        const messageDiv = document.getElementById('formMessage');
+        
+        if (form) {
+          form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (messageDiv) {
+              messageDiv.textContent = 'Sending message...';
+              messageDiv.className = 'form-message';
+              messageDiv.style.display = 'block';
+            }
+            
+            try {
+              const formData = new FormData(form);
+              const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                  'Accept': 'application/json'
+                }
+              });
+              
+              if (response.ok) {
+                if (messageDiv) {
+                  messageDiv.textContent = 'Thank you for your message! We\'ll get back to you soon.';
+                  messageDiv.className = 'form-message success';
+                }
+                form.reset();
+              } else {
+                throw new Error('Form submission failed');
+              }
+            } catch (error) {
+              console.error('Error:', error);
+              if (messageDiv) {
+                messageDiv.textContent = 'There was an error submitting the form. Please try again.';
+                messageDiv.className = 'form-message error';
+              }
+            }
+          });
+        }
+      });
+    </script>
+
+    <script type="module">
+      // Import necessary modules
+      import { initHeader } from "./js/components/header.js";
+      import { initFooter } from "./js/components/footer.js";
+
+      // Initialize header and footer
+      document.addEventListener("DOMContentLoaded", () => {
+        initHeader();
+
+        const footerContainer = document.getElementById("footer-container");
+        if (footerContainer) {
+          initFooter(footerContainer);
+        }
+
+        // Animate skill bars on scroll
+        const animateSkillBars = () => {
+          const skillBars = document.querySelectorAll(".skill-progress");
+          skillBars.forEach((bar) => {
+            const width = bar.getAttribute("data-width");
+            bar.style.width = "0";
+
+            const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    bar.style.width = width + "%";
+                    observer.unobserve(entry.target);
+                  }
+                });
+              },
+              { threshold: 0.5 }
+            );
+
+            observer.observe(bar);
+          });
+        };
+
+        // Form submission with validation
+        const contactForm = document.getElementById("contactForm");
+        if (contactForm) {
+          contactForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const formMessage = document.getElementById("formMessage");
+
+            // Simple validation
+            const name = formData.get("name").trim();
+            const email = formData.get("email").trim();
+            const subject = formData.get("subject").trim();
+            const message = formData.get("message").trim();
+
+            // Show success message
+            alert("Thank you for your message! We will get back to you soon.");
+
+            // Reset form
+            contactForm.reset();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

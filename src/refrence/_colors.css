@@ -1,0 +1,33 @@
+:root {
+  /* Primary Colors - Appetizing Food Theme */
+  --primary: #FF6B35;      /* Vibrant Orange - main brand color */
+  --primary-light: #FF8C5A; /* Lighter orange for hover states */
+  --primary-dark: #E65C2E;  /* Darker orange for pressed states */
+  --primary-rgb: 255, 107, 53; /* RGB values for opacity control */
+  
+  /* Background Colors */
+  --bg-light: #FFF8F0;     /* Warm off-white for main background */
+  --bg-paper: #FFF5EB;     /* Slightly darker for cards and content areas */
+  --bg-hover: rgba(255, 107, 53, 0.08); /* Subtle hover effect */
+  
+  /* Text Colors */
+  --text-primary: #2D2D2D;  /* Almost black for main text */
+  --text-secondary: #5C5C5C; /* Lighter text */
+  --text-on-primary: #FFFFFF; /* White text on colored backgrounds */
+  
+  /* Accent Colors */
+  --accent-green: #4CAF50;  /* For success messages */
+  --accent-red: #F44336;    /* For errors and warnings */
+  --accent-blue: #2196F3;   /* For information and links */
+  
+  /* Utility Colors */
+  --border: #E0E0E0;       /* Light borders */
+  --shadow: rgba(0, 0, 0, 0.1); /* Subtle shadows */
+  --overlay: rgba(0, 0, 0, 0.5); /* For modals and overlays */
+  
+  /* Status Colors */
+  --success: #4CAF50;      /* Green for success */
+  --warning: #FFC107;      /* Yellow for warnings */
+  --error: #F44336;        /* Red for errors */
+  --info: #2196F3;         /* Blue for information */
+}

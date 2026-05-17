@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooking Boss - Find Amazing Recipes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/hero section.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <style>
+        /* Layout Fixes */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        /* Main Content Wrapper */
+        .page-wrapper {
+            flex: 1 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Search Results Styles */
+        .search-results-section {
+            padding: 2rem 0;
+            min-height: 70vh;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            padding: 6rem 1.5rem 4rem;
+        }
+        
+        .search-results-header {
+            text-align: center;
+            margin: 2rem 0 3rem;
+        }
+        
+        .search-results-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Recipe Grid Layout */
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+        
+        .recipe-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .recipe-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .recipe-info {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .recipe-info h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .recipe-desc {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            line-clamp: 3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .recipe-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .recipe-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .recipe-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+    
+        
+        .search-query {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        
+        .results-count {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Loading State */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            padding: 2rem 0;
+            margin: 2rem 0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Recipe Grid */
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .recipe-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* Add this for absolute positioning context */
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .recipe-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .recipe-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .favorite-btn {
+            background: white;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ddd;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+        
+        .favorite-btn:hover {
+            color: #ff4757;
+            background: white;
+            transform: scale(1.1);
+        }
+        
+        .favorite-btn.favorited, 
+        .favorite-btn.active {
+            color: #ff4757;
+            background: white;
+            border-color: #ff4757;
+        }
+        
+        .favorite-btn.favorited i {
+            color: #ff4757;
+        }
+        
+        .recipe-info {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .recipe-info h3 {
+            margin: 0 0 0.5rem;
+            color: var(--text-dark);
+            font-size: 1.25rem;
+        }
+        
+        .recipe-info p {
+            color: var(--text-light);
+            margin: 0 0 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .view-recipe {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .view-recipe:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* No Results State */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+            grid-column: 1 / -1;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .no-results h2 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+        
+        .no-results p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-home:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .recipe-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .search-results-header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .search-results-section {
+                padding: 6rem 1.5rem 4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-results-section {
+                padding: 5rem 1.5rem 3rem;
+            }
+            
+            .search-results-header h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-search .container {
+                max-width: 100%;
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .recipe-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .search-results-header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .search-results-section {
+                padding: 5rem 1rem 2rem;
+            }
+            
+            .hero-search .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be injected here by JavaScript -->
+    <div id="app-header"></div>
+  
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <!-- Search Results Section -->
+        <main class="search-results-section">
+        <div class="container">
+            <div class="search-results-header">
+                <h1>Search Results</h1>
+                <div class="results-count" id="results-count"></div>
+            </div>
+            
+            <!-- Loading container -->
+            <div id="loading-container" class="loading-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Searching for recipes...</p>
+                </div>
+            </div>
+            
+            <!-- Results container -->
+            <div id="search-results-container" class="recipes-container"></div>
+        </div>
+        </main>
+    </div>
+
+    <!-- Footer will be injected here by JavaScript -->
+    <div id="footer-container"></div>
+
+    <!-- Recipe Modal -->
+    <div id="recipe-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initHeader } from './js/components/header.js';
+        import { initFooter } from './js/components/footer.js';
+        import { searchRecipes, getRecipeDetails } from './js/api.js';
+        import { renderRecipeModal } from './js/modal.js';
+        import { toggleFavorite } from './js/favorites.js';
+        
+        // Get DOM elements
+        const searchResultsContainer = document.getElementById('search-results-container');
+        const resultsCount = document.getElementById('results-count');
+        
+        // Show loading state
+        function showLoading(message = 'Searching...') {
+            const loadingContainer = document.getElementById('loading-container');
+            if (loadingContainer) {
+                loadingContainer.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>${message}</p>
+                    </div>
+                `;
+                loadingContainer.style.display = 'block';
+            }
+        }
+        
+        // Hide loading state
+        function hideLoading() {
+            const loadingContainer = document.getElementById('loading-container');
+            if (loadingContainer) {
+                loadingContainer.style.display = 'none';
+            }
+        }
+        
+        // Show error message
+        function showError(message) {
+            const resultsContainer = document.getElementById('search-results-container');
+            if (resultsContainer) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h2>Something went wrong</h2>
+                        <p>${message}</p>
+                        <button onclick="window.location.reload()" class="back-to-home">Try Again</button>
+                    </div>
+                `;
+                hideLoading();
+            }
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Initialize header
+                initHeader(document.body);
+                
+                // Initialize footer
+                const footerContainer = document.getElementById('footer-container');
+                if (footerContainer) {
+                    initFooter(footerContainer);
+                }
+                
+                // Get search query from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const query = urlParams.get('q');
+                
+                if (query) {
+                    // Update search input in header if it exists
+                    const searchInput = document.getElementById('hero-search');
+                    if (searchInput) {
+                        searchInput.value = query;
+                    }
+                    
+                    // Perform search
+                    await performSearch(query);
+                } else {
+                    // No search query provided
+                    showNoSearchQuery();
+                }
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showError('Failed to initialize the page. Please try again.');
+            }
+        });
+        
+        // Perform search with the given query
+        async function performSearch(query) {
+            if (!searchResultsContainer) return;
+            
+            try {
+                // Show loading state
+                showLoading(`Searching for "${query}"...`, searchResultsContainer);
+                
+                // Perform the search
+                const recipes = await searchRecipes(query);
+                
+                if (recipes && recipes.length > 0) {
+                    // Update results count
+                    resultsCount.textContent = `Found ${recipes.length} recipes for "${query}"`;
+                    
+                    // Render recipes
+                    renderRecipes(recipes);
+                } else {
+                    // No results found
+                    showNoResults(query);
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                showError('An error occurred while searching. Please try again.', searchResultsContainer);
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        // Render recipe cards in the grid
+        function renderRecipes(recipes) {
+            if (!searchResultsContainer) return;
+            
+            searchResultsContainer.innerHTML = '';
+            
+            // Create a grid container for the recipes
+            const recipeGrid = document.createElement('div');
+            recipeGrid.className = 'recipe-grid';
+            
+            recipes.forEach((recipe, index) => {
+                if (!recipe || !recipe.idMeal) return;
+                
+                const recipeCard = document.createElement('div');
+                recipeCard.className = 'recipe-card';
+                recipeCard.style.animationDelay = `${index * 0.1}s`;
+                recipeCard.dataset.id = recipe.idMeal;
+                
+                // Check if recipe is in favorites
+                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                const isFavorite = favorites.includes(recipe.idMeal);
+                
+                // Truncate description if too long
+                const description = recipe.strInstructions 
+                    ? recipe.strInstructions.split(' ').slice(0, 20).join(' ') + '...'
+                    : 'No description available.';
+                
+                recipeCard.innerHTML = `
+                    <img src="${recipe.strMealThumb || 'https://via.placeholder.com/300x200'}" 
+                         alt="${recipe.strMeal || 'Recipe image'}" 
+                         class="recipe-img"
+                         onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Available';">
+                    <div class="recipe-info">
+                        <h3>${recipe.strMeal || 'Unnamed Recipe'}</h3>
+                        <div class="recipe-meta">
+                            <span><i class="fas fa-utensils"></i> ${recipe.strCategory || 'N/A'}</span>
+                            <span><i class="fas fa-globe"></i> ${recipe.strArea || 'N/A'}</span>
+                        </div>
+                        <p class="recipe-desc">${description}</p>
+                        <div class="recipe-actions">
+                            <div class="recipe-actions-inner">
+                                <button class="view-recipe" data-id="${recipe.idMeal}">View Recipe</button>
+                                <button class="favorite-btn ${isFavorite ? 'favorited' : ''}" 
+                                        data-id="${recipe.idMeal}" 
+                                        aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                recipeGrid.appendChild(recipeCard);
+            });
+            
+            searchResultsContainer.appendChild(recipeGrid);
+            
+            // Add event listeners for view recipe buttons
+            document.querySelectorAll('.view-recipe').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const recipeId = btn.dataset.id;
+                    if (recipeId) {
+                        try {
+                            const recipe = await getRecipeDetails(recipeId);
+                            if (recipe) {
+                                renderRecipeModal(recipe);
+                                document.getElementById('recipe-modal').style.display = 'block';
+                                document.body.style.overflow = 'hidden';
+                            }
+                        } catch (error) {
+                            console.error('Error loading recipe:', error);
+                            // Show error in modal
+                            const modalBody = document.getElementById('modal-body');
+                            if (modalBody) {
+                                modalBody.innerHTML = `
+                                    <div class="error-message">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <h3>Error Loading Recipe</h3>
+                                        <p>Failed to load recipe details. Please try again later.</p>
+                                    </div>
+                                `;
+                                document.getElementById('recipe-modal').style.display = 'block';
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Add event listeners for favorite buttons
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                const recipeId = btn.dataset.id;
+                const recipe = recipes.find(r => r.idMeal === recipeId);
+                
+                // Set initial favorite state
+                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                const isFavorite = Array.isArray(favorites) && favorites.some(fav => fav.idMeal === recipeId);
+                btn.classList.toggle('favorited', isFavorite);
+                btn.innerHTML = isFavorite ? 
+                    '<i class="fas fa-heart"></i>' : 
+                    '<i class="far fa-heart"></i>';
+                
+                // Add click handler
+                btn.addEventListener('click', (e) => handleFavoriteClick(e, recipe));
+            });
+            
+            // Add click event to recipe cards
+            document.querySelectorAll('.recipe-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Don't navigate if clicking on favorite button or its children
+                    if (!e.target.closest('.favorite-btn') && !e.target.closest('.view-recipe')) {
+                        const recipeId = card.dataset.id;
+                        if (recipeId) {
+                            showRecipeInModal(recipeId);
+                        }
+                    }
+                });
+            });
+        }
+        
+        // Handle favorite button click
+        function handleFavoriteClick(e, recipe) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Get the recipe ID from the button's data attribute
+            const recipeId = e.currentTarget.dataset.id;
+            const recipeCard = e.currentTarget.closest('.recipe-card');
+            
+            if (recipeId && recipe) {
+                try {
+                    // Call the toggleFavorite function from favorites.js
+                    toggleFavorite(e, recipe);
+                    
+                    // Get updated favorites from localStorage
+                    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                    const isFavorite = Array.isArray(favorites) && 
+                                    favorites.some(fav => fav.idMeal === recipeId);
+                    
+                    // Update the button state
+                    e.currentTarget.classList.toggle('favorited', isFavorite);
+                    e.currentTarget.innerHTML = isFavorite ? 
+                        '<i class="fas fa-heart"></i>' : 
+                        '<i class="far fa-heart"></i>';
+                    
+                    // Add animation class
+                    if (recipeCard) {
+                        recipeCard.classList.add('favorite-updated');
+                        setTimeout(() => recipeCard.classList.remove('favorite-updated'), 500);
+                    }
+                    
+                    // Show notification
+                    showNotification(isFavorite ? 'Added to favorites!' : 'Removed from favorites');
+                } catch (error) {
+                    console.error('Error updating favorite:', error);
+                    showNotification('Error updating favorites. Please try again.');
+                }
+            }
+        }
+        
+        // Show no results message
+        function showNoResults(query) {
+            if (!searchResultsContainer) return;
+            
+            searchResultsContainer.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h2>No recipes found for "${query}"</h2>
+                    <p>We couldn't find any recipes matching your search. Try different keywords or browse our categories.</p>
+                    <a href="index.html" class="back-to-home">Back to Home</a>
+                </div>
+            `;
+        }
+        
+        // Show message when no search query is provided
+        function showNoSearchQuery() {
+            if (!searchResultsContainer) return;
+            
+            searchResultsContainer.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h2>No Search Query</h2>
+                    <p>Please enter a search term to find recipes.</p>
+                    <a href="index.html" class="back-to-home">Back to Home</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
