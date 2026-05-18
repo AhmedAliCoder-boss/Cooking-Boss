@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AlertCircle, RefreshCw } from 'lucide-react'
+import { AlertTriangle, RefreshCw } from 'lucide-react'
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class ErrorBoundary extends Component {
         <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
           <div className="max-w-md w-full text-center">
             <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <AlertCircle size={40} className="text-red-500" />
+              <AlertTriangle size={48} className="text-red-500 mb-4" />
             </div>
             <h1 className="text-3xl font-bold text-(--text-primary) mb-4">
               Oops! Something went wrong

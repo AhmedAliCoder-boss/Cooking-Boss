@@ -1,0 +1,26 @@
+{
+  "name": "Cooking Boss",
+  "short_name": "Cooking Boss",
+  "description": "Where taste meets mystery - Discover delicious recipes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff9f4",
+  "theme_color": "#ff6b6b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "lifestyle", "cooking"],
+  "screenshots": []
+}

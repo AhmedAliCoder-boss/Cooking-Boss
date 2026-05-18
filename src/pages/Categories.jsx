@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Grid3X3, UtensilsCrossed } from 'lucide-react'
+import { Grid, Utensils } from 'lucide-react'
 import { mealDBApi } from '../services/mealDBApi'
 import { getSingleCoverPhoto } from '../services/unsplashApi'
 import { SkeletonGrid } from '../components/Skeleton'
@@ -54,6 +54,10 @@ const areaImages = {
 }
 
 const Categories = () => {
+  useEffect(() => {
+    document.title = 'Categories - Cooking Boss'
+  }, [])
+
   const [categories, setCategories] = useState([])
   const [areas, setAreas] = useState([])
   const [loading, setLoading] = useState(true)
@@ -154,7 +158,7 @@ const Categories = () => {
                 : 'bg-white/10 text-slate-300 hover:bg-white/20'
             }`}
           >
-            <UtensilsCrossed size={20} />
+            <Utensils size={20} />
             Categories
           </button>
           <button
@@ -165,7 +169,7 @@ const Categories = () => {
                 : 'bg-white/10 text-slate-300 hover:bg-white/20'
             }`}
           >
-            <Grid3X3 size={20} />
+            <Grid size={20} />
             Cuisines
           </button>
         </div>

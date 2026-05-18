@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Search, ChefHat, ArrowRight, Sparkles, X } from 'lucide-react'
 import { spoonacularApi } from '../services/spoonacularApi'
 import { Link } from 'react-router-dom'
 
 const FridgeFinder = () => {
+  useEffect(() => {
+    document.title = 'Fridge Finder - Cooking Boss'
+  }, [])
   const [ingredients, setIngredients] = useState('')
   const [recipes, setRecipes] = useState([])
   const [loading, setLoading] = useState(false)
@@ -146,15 +149,13 @@ const FridgeFinder = () => {
                           <ChefHat size={16} />
                           <span>Uses {recipe.usedIngredientCount} of your items</span>
                         </div>
-                        <a
-                          href={`https://spoonacular.com/recipes/${recipe.title.replace(/\s+/g, '-').toLowerCase()}-${recipe.id}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <Link
+                          to={`/recipe/${recipe.id}?source=spoonacular`}
                           className="flex items-center gap-1 text-[#ff6b6b] hover:text-[#ff5252] text-sm font-medium"
                         >
                           View
                           <ArrowRight size={16} />
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

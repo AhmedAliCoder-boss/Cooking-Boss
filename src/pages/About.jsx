@@ -1,5 +1,5 @@
-import React from 'react'
-import { ChefHat, Heart, Users, Sparkles, Mail, ExternalLink } from 'lucide-react'
+import React, { useEffect } from 'react'
+import { ChefHat, Heart, Users, Sparkles, Mail, ExternalLink, Link as LinkIcon } from 'lucide-react'
 
 const GithubIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -8,6 +8,9 @@ const GithubIcon = () => (
 )
 
 const About = () => {
+  useEffect(() => {
+    document.title = 'About Us - Cooking Boss'
+  }, [])
   const features = [
     {
       icon: ChefHat,

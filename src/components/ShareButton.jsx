@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Share2, Link2, Check } from 'lucide-react'
+import { Share, Link as LinkIcon, Check } from 'lucide-react'
 import { toast } from './ToastProvider'
 
 // Social media icons as SVG components
@@ -72,7 +72,7 @@ const ShareButton = ({ recipe, size = 20 }) => {
         onClick={navigator.share ? handleNativeShare : () => setShowMenu(!showMenu)}
         className="flex items-center gap-2 px-4 py-2 bg-white/10 text-(--text-primary) rounded-full hover:bg-white/20 transition-colors"
       >
-        <Share2 size={size} />
+        <LinkIcon size={16} />
         <span className="hidden sm:inline">Share</span>
       </button>
 
@@ -87,7 +87,7 @@ const ShareButton = ({ recipe, size = 20 }) => {
               onClick={handleCopyLink}
               className="w-full flex items-center gap-3 px-4 py-3 text-(--text-primary) hover:bg-white/5 transition-colors"
             >
-              {copied ? <Check size={18} className="text-green-500" /> : <Link2 size={18} />}
+              {copied ? <Check size={18} className="text-green-500" /> : <LinkIcon size={18} />}
               {copied ? 'Copied!' : 'Copy Link'}
             </button>
             <button

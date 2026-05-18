@@ -9,6 +9,9 @@ import { mealDBApi } from '../services/mealDBApi'
 import { buildRecipesListQuery, pickPhotoFromPool } from '../services/unsplashApi'
 
 const Recipes = () => {
+  useEffect(() => {
+    document.title = 'Recipes - Cooking Boss'
+  }, [])
   const [searchParams, setSearchParams] = useSearchParams()
   const { recipes, loading: recipesLoading, getLatestRecipes, getByCategory } = useRecipes()
   const { search, results, loading: searchLoading } = useSearch()
@@ -22,8 +25,10 @@ const Recipes = () => {
 
   useEffect(() => {
     loadCategories()
-    
-    // Handle initial load based on URL params
+  }, [])
+
+  useEffect(() => {
+    // Handle URL params changes
     const urlSearch = searchParams.get('search')
     const urlCategory = searchParams.get('category')
     const urlArea = searchParams.get('area')
@@ -31,16 +36,22 @@ const Recipes = () => {
     if (urlSearch) {
       setSearchQuery(urlSearch)
       search(urlSearch)
+      setActiveCategory('All')
+      setActiveArea('')
     } else if (urlCategory && urlCategory !== 'All') {
       setActiveCategory(urlCategory)
+      setActiveArea('')
       getByCategory(urlCategory)
     } else if (urlArea) {
       setActiveArea(urlArea)
+      setActiveCategory('All')
       loadByArea(urlArea)
     } else {
+      setActiveCategory('All')
+      setActiveArea('')
       getLatestRecipes()
     }
-  }, [getLatestRecipes, getByCategory, search])
+  }, [searchParams, getLatestRecipes, getByCategory, search])
 
   const loadCategories = async () => {
     try {
@@ -120,7 +131,7 @@ const Recipes = () => {
             Discover Delicious <span className="text-[#ff6b6b]">Recipes</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Browse the full catalog from TheMealDB—every category merged into one searchable grid.
+            Find and explore tasty recipes from around the world in one place.
           </p>
         </div>
 

@@ -1,6 +1,5 @@
 export { useRecipes } from './useRecipes'
 export { useSearch } from './useSearch'
-export { useNutrition } from './useNutrition'
 export { useVideos } from './useVideos'
 export { useIngredients } from './useIngredients'
 export { useFavorites } from './useFavorites'

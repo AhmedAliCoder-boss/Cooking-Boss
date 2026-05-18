@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight, Play, UtensilsCrossed } from 'lucide-react'
+import { ArrowRight, PlayCircle, Utensils } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const QuickFeatures = () => {
@@ -13,7 +13,7 @@ const QuickFeatures = () => {
           >
             <div className="flex items-start gap-4 w-full">
               <div className="w-14 h-14 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center shrink-0">
-                <UtensilsCrossed className="text-[#ff6b6b]" size={28} />
+                <Utensils className="text-[#ff6b6b]" size={28} />
               </div>
               <div className="min-w-0">
                 <h3 className="text-xl font-bold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">
@@ -35,7 +35,7 @@ const QuickFeatures = () => {
           >
             <div className="flex items-start gap-4 w-full">
               <div className="w-14 h-14 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center shrink-0">
-                <Play className="text-[#ff6b6b]" size={28} />
+                <PlayCircle className="text-[#ff6b6b]" size={24} />
               </div>
               <div className="min-w-0">
                 <h3 className="text-xl font-bold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">

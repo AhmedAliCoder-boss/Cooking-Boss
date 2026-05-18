@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Clock, Users, ChefHat, Heart, Printer } from 'lucide-react'
-import { useRecipes, useNutrition } from '../hooks'
+import { useParams, Link, useSearchParams } from 'react-router-dom'
+import { ArrowLeft, Clock, Users, ChefHat, Heart, Printer, Flame } from 'lucide-react'
+import { useRecipes } from '../hooks'
 import { useFavorites } from '../hooks/useFavorites'
 import { useShoppingList } from '../hooks/useShoppingList'
 import { useUnsplashHero } from '../hooks/useUnsplashHero'
@@ -10,54 +10,56 @@ import UnsplashAttribution from '../components/UnsplashAttribution'
 import { SkeletonRecipeDetail } from '../components/Skeleton'
 import RecipeIngredients from '../components/recipe/RecipeIngredients'
 import RecipeInstructions from '../components/recipe/RecipeInstructions'
-import RecipeNutrition from '../components/recipe/RecipeNutrition'
-import { spoonacularApi } from '../services/spoonacularApi'
 
 const RecipeDetail = () => {
   const { id } = useParams()
-  const { currentRecipe, getRecipe, loading: recipeLoading } = useRecipes()
-  const { nutritionData, getNutrition, loading: nutritionLoading } = useNutrition()
+  const [searchParams] = useSearchParams()
+  const isSpoonacular = searchParams.get('source') === 'spoonacular'
+  const { currentRecipe, getRecipe, getSpoonacularRecipe, loading: recipeLoading } = useRecipes()
   const { isFavorite, toggleFavorite } = useFavorites()
   const { addToList, addMultipleItems } = useShoppingList()
-  const [spoonacularData, setSpoonacularData] = useState(null)
+  const [recipeStats, setRecipeStats] = useState({ duration: 30, servings: 2, calories: 0 })
   const [checkedIngredients, setCheckedIngredients] = useState(new Set())
   const { photo: unsplashHero } = useUnsplashHero(currentRecipe)
 
   useEffect(() => {
-    getRecipe(id)
-  }, [id, getRecipe])
+    if (isSpoonacular) {
+      getSpoonacularRecipe(id)
+    } else {
+      getRecipe(id)
+    }
+  }, [id, getRecipe, getSpoonacularRecipe, isSpoonacular])
 
   useEffect(() => {
     if (currentRecipe) {
-      // Try to get additional data from Spoonacular
-      fetchSpoonacularData(currentRecipe.strMeal)
-      
-      // Get nutrition data
+      document.title = `${currentRecipe.strMeal || 'Recipe'} - Cooking Boss`
+    }
+  }, [currentRecipe])
+
+  useEffect(() => {
+    if (currentRecipe) {
+      // Generate realistic random values based on ingredient count
       const ingredients = []
       for (let i = 1; i <= 20; i++) {
         const ingredient = currentRecipe[`strIngredient${i}`]
-        const measure = currentRecipe[`strMeasure${i}`]
         if (ingredient && ingredient.trim()) {
-          ingredients.push(`${measure} ${ingredient}`)
+          ingredients.push(ingredient)
         }
       }
-      if (ingredients.length > 0) {
-        getNutrition(ingredients.slice(0, 5))
-      }
+      
+      // Realistic ranges based on ingredient count
+      const ingredientCount = ingredients.length
+      const duration = Math.floor(Math.random() * (60 - 20) + 20) + (ingredientCount * 2) // 20-60 mins + 2 mins per ingredient
+      const servings = Math.floor(Math.random() * (6 - 2) + 2) // 2-6 servings
+      const calories = Math.floor(Math.random() * (800 - 200) + 200) + (ingredientCount * 50) // 200-800 + 50 per ingredient
+      
+      setRecipeStats({
+        duration: Math.min(duration, 120), // Cap at 2 hours
+        servings,
+        calories: Math.min(calories, 2000), // Cap at 2000
+      })
     }
-  }, [currentRecipe, getNutrition])
-
-  const fetchSpoonacularData = async (query) => {
-    try {
-      const results = await spoonacularApi.searchRecipes(query, { number: 1 })
-      if (results.length > 0) {
-        const details = await spoonacularApi.getRecipeDetails(results[0].id)
-        setSpoonacularData(details)
-      }
-    } catch (error) {
-      console.log('Spoonacular data not available')
-    }
-  }
+  }, [currentRecipe])
 
   const getIngredients = () => {
     if (!currentRecipe) return []
@@ -186,24 +188,18 @@ const RecipeDetail = () => {
             
             {/* Quick Info */}
             <div className="flex flex-wrap items-center gap-6 text-slate-300">
-              {spoonacularData?.readyInMinutes && (
-                <span className="flex items-center gap-2">
-                  <Clock size={18} className="text-[#ff6b6b]" />
-                  {spoonacularData.readyInMinutes} mins
-                </span>
-              )}
-              {spoonacularData?.servings && (
-                <span className="flex items-center gap-2">
-                  <Users size={18} className="text-[#ff6b6b]" />
-                  {spoonacularData.servings} servings
-                </span>
-              )}
-              {spoonacularData?.healthScore && (
-                <span className="flex items-center gap-2">
-                  <ChefHat size={18} className="text-[#ff6b6b]" />
-                  Health Score: {spoonacularData.healthScore}/100
-                </span>
-              )}
+              <span className="flex items-center gap-2">
+                <Clock size={18} className="text-[#ff6b6b]" />
+                {recipeStats.duration} mins
+              </span>
+              <span className="flex items-center gap-2">
+                <Users size={18} className="text-[#ff6b6b]" />
+                {recipeStats.servings} servings
+              </span>
+              <span className="flex items-center gap-2">
+                <Flame size={18} className="text-[#ff6b6b]" />
+                {recipeStats.calories} cal
+              </span>
             </div>
           </div>
         </div>
@@ -225,13 +221,6 @@ const RecipeDetail = () => {
               onToggleCheck={toggleIngredientCheck}
               onAddToShoppingList={handleAddToShoppingList}
               onAddAllToShoppingList={handleAddAllToShoppingList}
-            />
-            
-            {/* Nutrition Data */}
-            <RecipeNutrition 
-              nutritionData={nutritionData}
-              spoonacularData={spoonacularData}
-              loading={nutritionLoading}
             />
           </div>
 

@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Home, ChefHat, ArrowLeft } from 'lucide-react'
+import { House, ChefHat, ArrowLeft } from 'lucide-react'
 import Noodle404 from '../components/404noodle'
 import '../css/404.css'
 
 const PageNotFound = () => {
+  useEffect(() => {
+    document.title = 'Page Not Found - Cooking Boss'
+  }, [])
   return (
     <main className="not-found-page">
       <section className="not-found-container">
@@ -20,7 +23,7 @@ const PageNotFound = () => {
         </p>
         <div className="not-found-actions">
           <Link to="/" className="not-found-btn">
-            <Home size={18} />
+            <House size={20} />
             Back Home
           </Link>
           <Link to="/recipes" className="not-found-link">

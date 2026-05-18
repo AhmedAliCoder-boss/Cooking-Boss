@@ -1,14 +1,18 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Shuffle, ChefHat } from 'lucide-react'
+import { ArrowRight, RefreshCw, ChefHat } from 'lucide-react'
 import { mealDBApi } from '../../services/mealDBApi'
 
 const FeaturedRecipes = () => {
   const [recipes, setRecipes] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const isLoadingRef = useRef(false)
 
-  const loadRecipes = useCallback(async () => {
+  const loadRecipes = async () => {
+    if (isLoadingRef.current) return
+    isLoadingRef.current = true
+
     try {
       setLoading(true)
       setError(null)
@@ -20,12 +24,13 @@ const FeaturedRecipes = () => {
       setRecipes([])
     } finally {
       setLoading(false)
+      isLoadingRef.current = false
     }
-  }, [])
+  }
 
   useEffect(() => {
     loadRecipes()
-  }, [loadRecipes])
+  }, [])
 
   return (
     <section className="home-featured-band py-16 text-(--text-primary)">
@@ -34,7 +39,7 @@ const FeaturedRecipes = () => {
           <div className="flex flex-wrap items-center gap-3">
             <h2 className="text-3xl font-semibold">Featured Recipes</h2>
             <div className="flex items-center gap-1 px-3 py-1 bg-[#ff6b6b]/10 rounded-full">
-              <Shuffle size={14} className="text-[#ff6b6b]" />
+              <RefreshCw size={14} className="text-[#ff6b6b]" />
               <span className="text-[#ff6b6b] text-sm font-medium">From TheMealDB</span>
             </div>
           </div>
@@ -45,7 +50,7 @@ const FeaturedRecipes = () => {
               disabled={loading}
               className="flex items-center gap-2 px-4 py-2 bg-[#ff6b6b] hover:bg-[#ff5252] disabled:opacity-60 disabled:pointer-events-none rounded-lg transition-colors text-white"
             >
-              <Shuffle size={18} />
+              <RefreshCw size={18} />
               <span>Shuffle</span>
             </button>
             <Link to="/recipes" className="flex items-center gap-2 text-[#ff6b6b] hover:text-[#ff5252] transition-colors font-medium">

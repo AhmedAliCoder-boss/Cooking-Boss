@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Play, Clock, Users, ChefHat } from 'lucide-react'
+import { PlayCircle, Clock, Users, ChefHat } from 'lucide-react'
 import { tastyApi } from '../services/tastyApi'
 
 const VideosSection = () => {
@@ -91,7 +91,7 @@ const VideosSection = () => {
                 />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                   <div className="w-14 h-14 bg-[#ff6b6b] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Play size={28} className="text-white ml-1" fill="white" />
+                    <PlayCircle size={20} className="text-white ml-1" fill="white" />
                   </div>
                 </div>
                 {video.video_url && (

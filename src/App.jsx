@@ -16,6 +16,10 @@ import Videos from './pages/Videos'
 import Offline from './pages/offline.jsx'
 import PageNotFound from './pages/404PageNotFound'
 import FavoritesPage from './pages/FavoritesPage'
+import Contact from './pages/Contact'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfService from './pages/TermsOfService'
+import HelpCenter from './pages/HelpCenter'
 import { ThemeProvider } from './context/ThemeContext'
 import './css/animations.css'
 import './css/theme.css'
@@ -38,6 +42,10 @@ const App = () => {
               <Route path="/videos" element={<Videos />} />
               <Route path="/favorites" element={<FavoritesPage />} />
               <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/help" element={<HelpCenter />} />
               <Route path="/offline" element={<Offline />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>

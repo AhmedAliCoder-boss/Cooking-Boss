@@ -12,7 +12,7 @@ const categories = [
   },
   {
     title: 'Pizza',
-    image: 'https://www.themealdb.com/images/category/pizza.png',
+    image: 'https://images.rawpixel.com/image_png_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTExL3Jhd3BpeGVsb2ZmaWNlMl9pbWFnZV9vZl9hX2NoZWVzZV9waXp6YV93aXRoX29uZV9zbGljZV9iZWluZ19wdV9jOWU5NTEwZi1hNzJjLTRiNTItYWRjZC1kNmRlYTU5OTU0YTAtbTNwajF4ZHkucG5n.png',
     description: 'Crisp crusts, gourmet toppings, and artisan flavors',
     id: 'pizza',
   },

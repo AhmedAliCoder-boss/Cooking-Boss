@@ -4,6 +4,7 @@ import {
   fetchRecipes,
   fetchRecipeById,
   fetchRecipesByCategory,
+  fetchSpoonacularRecipeById,
   clearCurrentRecipe,
   clearError,
 } from '../store/slices/recipesSlice'
@@ -24,6 +25,10 @@ export const useRecipes = () => {
     dispatch(fetchRecipesByCategory(category))
   }, [dispatch])
 
+  const getSpoonacularRecipe = useCallback((id) => {
+    dispatch(fetchSpoonacularRecipeById(id))
+  }, [dispatch])
+
   const clearRecipe = useCallback(() => {
     dispatch(clearCurrentRecipe())
   }, [dispatch])
@@ -39,6 +44,7 @@ export const useRecipes = () => {
     error,
     getLatestRecipes,
     getRecipe,
+    getSpoonacularRecipe,
     getByCategory,
     clearRecipe,
     clearErrorState,

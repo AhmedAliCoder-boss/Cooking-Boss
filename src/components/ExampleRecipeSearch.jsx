@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useRecipes, useSearch, useNutrition, useVideos, useIngredients } from '../hooks'
+import { useRecipes, useSearch, useVideos, useIngredients } from '../hooks'
 
 const ExampleRecipeSearch = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -7,7 +7,6 @@ const ExampleRecipeSearch = () => {
 
   const { recipes, loading: recipesLoading, getLatestRecipes, searchRecipes } = useRecipes()
   const { results, loading: searchLoading, search, searchByFridge } = useSearch()
-  const { nutritionData, loading: nutritionLoading, getNutrition } = useNutrition()
   const { videos, loading: videosLoading, searchVideos } = useVideos()
   const { ingredients: ingredientResults, loading: ingredientsLoading, findIngredients, findRecipesByIngredient } = useIngredients()
 
@@ -118,16 +117,6 @@ const ExampleRecipeSearch = () => {
         </button>
       </section>
 
-      {/* Nutrition Analysis */}
-      <section className="p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Nutrition Analysis (Edamam)</h2>
-        <button
-          onClick={() => getNutrition(['1 cup rice', '100g chicken breast'])}
-          className="px-6 py-2 bg-[#ff6b6b] text-white rounded-lg hover:bg-[#ff5252]"
-        >
-          Analyze Ingredients
-        </button>
-      </section>
     </div>
   )
 }

@@ -1,18 +1,33 @@
 import React, { useState } from "react";
 import { Search, Heart, ShoppingCart, Moon, Sun } from 'lucide-react'; 
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useFavorites } from '../hooks/useFavorites'
 import { useShoppingList } from '../hooks/useShoppingList'
 import { useTheme } from '../context/ThemeContext'
+import PWAInstallButton from './PWAInstallButton'
 import "../css/header.css";
 
 const Header = ({ onShoppingListClick }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isActive = (path) => location.pathname === path;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { favoritesCount } = useFavorites()
   const { totalItems } = useShoppingList()
   const { theme, toggleTheme } = useTheme()
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      navigate(`/recipes?search=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchQuery('')
+    }
+  }
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value)
+  }
 
   return (
     <header className="app-header print:hidden">
@@ -104,13 +119,18 @@ const Header = ({ onShoppingListClick }) => {
 
         {/* Header Actions */}
         <div className="header-actions">
+          <PWAInstallButton />
+          
           <div className="search-container">
             <input 
               type="text" 
               id="header-search"
-              placeholder="Search recipes..." 
+              placeholder="Search recipes..."
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
             />
-            <button className="search-btn">
+            <button className="search-btn" onClick={handleSearch}>
               <Search size={18} />
             </button>
           </div>

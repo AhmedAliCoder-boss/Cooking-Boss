@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { mealDBApi } from '../../services/mealDBApi'
+import { spoonacularApi } from '../../services/spoonacularApi'
 
 export const fetchRecipes = createAsyncThunk(
   'recipes/fetchRecipes',
@@ -35,6 +36,38 @@ export const fetchRecipesByCategory = createAsyncThunk(
     }
   }
 )
+
+export const fetchSpoonacularRecipeById = createAsyncThunk(
+  'recipes/fetchSpoonacularRecipeById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await spoonacularApi.getRecipeDetails(id)
+      // Convert Spoonacular format to match TheMealDB format
+      return {
+        idMeal: response.id.toString(),
+        strMeal: response.title,
+        strMealThumb: response.image,
+        strCategory: response.dishTypes?.[0] || 'Unknown',
+        strArea: 'Spoonacular',
+        strInstructions: response.instructions,
+        // Map extended ingredients to TheMealDB format
+        ...mapSpoonacularToMealDB(response),
+      }
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
+const mapSpoonacularToMealDB = (spoonacularRecipe) => {
+  const mapped = {}
+  spoonacularRecipe.extendedIngredients?.forEach((ing, index) => {
+    const i = index + 1
+    mapped[`strIngredient${i}`] = ing.name
+    mapped[`strMeasure${i}`] = ing.amount ? `${ing.amount} ${ing.unit}` : ''
+  })
+  return mapped
+}
 
 const recipesSlice = createSlice({
   name: 'recipes',
@@ -72,6 +105,18 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipesByCategory.fulfilled, (state, action) => {
         state.items = action.payload
+      })
+      .addCase(fetchSpoonacularRecipeById.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(fetchSpoonacularRecipeById.fulfilled, (state, action) => {
+        state.loading = false
+        state.currentRecipe = action.payload
+      })
+      .addCase(fetchSpoonacularRecipeById.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
       })
   },
 })

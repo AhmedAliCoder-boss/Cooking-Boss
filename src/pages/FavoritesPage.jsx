@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Heart, ArrowRight, Trash2, ChefHat } from 'lucide-react'
 import { useFavorites } from '../hooks/useFavorites'
 import { SkeletonGrid } from '../components/Skeleton'
 
 const FavoritesPage = () => {
+  useEffect(() => {
+    document.title = 'Favorites - Cooking Boss'
+  }, [])
   const { favorites, removeFromFavorites, clearFavorites, favoritesCount } = useFavorites()
 
   return (
