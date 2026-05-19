@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChefHat, Plus, ShoppingCart, ExternalLink } from 'lucide-react'
+import { FaUtensils, FaPlus, FaShoppingCart, FaExternalLinkAlt } from 'react-icons/fa'
 import { getMycartSearchUrl } from '../../utils/mycart'
 
 const RecipeIngredients = ({ ingredients, checkedIngredients, onToggleCheck, onAddToShoppingList, onAddAllToShoppingList }) => {
@@ -7,7 +7,7 @@ const RecipeIngredients = ({ ingredients, checkedIngredients, onToggleCheck, onA
     <div className="bg-white/5 rounded-2xl p-6 border border-white/10 sticky top-24">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-bold text-(--text-primary) flex items-center gap-2">
-          <ChefHat className="text-[#ff6b6b]" size={24} />
+          <FaUtensils className="text-[#ff6b6b] text-2xl" />
           Ingredients
         </h2>
         <button
@@ -15,7 +15,7 @@ const RecipeIngredients = ({ ingredients, checkedIngredients, onToggleCheck, onA
           className="p-2 text-[#ff6b6b] hover:bg-[#ff6b6b]/10 rounded-full transition-colors"
           title="Add all to shopping list"
         >
-          <ShoppingCart size={20} />
+          <FaShoppingCart className="text-xl" />
         </button>
       </div>
       <ul className="space-y-3">
@@ -59,7 +59,7 @@ const RecipeIngredients = ({ ingredients, checkedIngredients, onToggleCheck, onA
                 className="p-1 text-green-400 hover:bg-green-400/10 rounded transition-all"
                 title="Order from mycart.pk"
               >
-                <ExternalLink size={16} />
+                <FaExternalLinkAlt className="text-base" />
               </a>
               <button
                 onClick={(e) => {
@@ -69,7 +69,7 @@ const RecipeIngredients = ({ ingredients, checkedIngredients, onToggleCheck, onA
                 className="p-1 text-[#ff6b6b] hover:bg-[#ff6b6b]/10 rounded transition-all"
                 title="Add to shopping list"
               >
-                <Plus size={16} />
+                <FaPlus className="text-base" />
               </button>
             </div>
           </li>

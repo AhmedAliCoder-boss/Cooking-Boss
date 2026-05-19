@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heart } from 'lucide-react'
+import { FaHeart } from 'react-icons/fa'
 import { useFavorites } from '../hooks/useFavorites'
 
 const FavoriteButton = ({ recipe, size = 24, className = '' }) => {
@@ -16,14 +16,13 @@ const FavoriteButton = ({ recipe, size = 24, className = '' }) => {
       className={`transition-all duration-300 hover:scale-110 ${className}`}
       aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
     >
-      <Heart
-        size={size}
+      <FaHeart
         className={`transition-colors duration-300 ${
           favorite 
             ? 'text-[#ff6b6b] fill-[#ff6b6b]' 
             : 'text-white/70 hover:text-[#ff6b6b]'
         }`}
-        fill={favorite ? '#ff6b6b' : 'none'}
+        style={{ fontSize: size }}
       />
     </button>
   )

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, Clock, Users, ChefHat, Heart, Printer, Flame } from 'lucide-react'
+import { FaArrowLeft, FaClock, FaUsers, FaUtensils, FaHeart, FaPrint, FaFire } from 'react-icons/fa'
 import { useRecipes } from '../hooks'
 import { useFavorites } from '../hooks/useFavorites'
 import { useShoppingList } from '../hooks/useShoppingList'
@@ -141,7 +141,7 @@ const RecipeDetail = () => {
             to="/recipes"
             className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-sm text-white rounded-full hover:bg-black/60 transition-colors"
           >
-            <ArrowLeft size={18} />
+            <FaArrowLeft className="text-lg" />
             <span className="hidden sm:inline">Back to Recipes</span>
           </Link>
           
@@ -150,17 +150,15 @@ const RecipeDetail = () => {
               onClick={handlePrint}
               className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-sm text-white rounded-full hover:bg-black/60 transition-colors print:hidden"
             >
-              <Printer size={18} />
+              <FaPrint className="text-lg" />
               <span className="hidden sm:inline">Print</span>
             </button>
             <button
               onClick={() => toggleFavorite(currentRecipe)}
               className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-sm rounded-full hover:bg-black/60 transition-colors print:hidden"
             >
-              <Heart 
-                size={20} 
-                className={isFavorite(currentRecipe.idMeal) ? 'text-[#ff6b6b] fill-[#ff6b6b]' : 'text-white'}
-                fill={isFavorite(currentRecipe.idMeal) ? '#ff6b6b' : 'none'}
+              <FaHeart 
+                className={isFavorite(currentRecipe.idMeal) ? 'text-[#ff6b6b] fill-[#ff6b6b] text-xl' : 'text-white text-xl'}
               />
             </button>
             {currentRecipe && (
@@ -189,15 +187,15 @@ const RecipeDetail = () => {
             {/* Quick Info */}
             <div className="flex flex-wrap items-center gap-6 text-slate-300">
               <span className="flex items-center gap-2">
-                <Clock size={18} className="text-[#ff6b6b]" />
+                <FaClock className="text-[#ff6b6b] text-lg" />
                 {recipeStats.duration} mins
               </span>
               <span className="flex items-center gap-2">
-                <Users size={18} className="text-[#ff6b6b]" />
+                <FaUsers className="text-[#ff6b6b] text-lg" />
                 {recipeStats.servings} servings
               </span>
               <span className="flex items-center gap-2">
-                <Flame size={18} className="text-[#ff6b6b]" />
+                <FaFire className="text-[#ff6b6b] text-lg" />
                 {recipeStats.calories} cal
               </span>
             </div>

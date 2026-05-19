@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ArrowRight } from 'lucide-react'
+import { FaArrowRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { getSingleCoverPhoto } from '../../services/unsplashApi'
 
@@ -73,11 +73,11 @@ const CategoriesSection = () => {
             to="/categories"
             className="inline-flex items-center gap-2 rounded-full border border-primary-accent/20 bg-card/80 px-5 py-3 text-sm font-semibold text-primary-accent shadow-card transition hover:bg-card/95 hover:text-primary"
           >
-            View All <ArrowRight size={18} />
+            View All <FaArrowRight className="text-lg" />
           </Link>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <div className="grid gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {categories.map((category, index) => {
             const cover = coverById[category.id]
             const imgSrc = cover?.thumbUrl || cover?.heroUrl || category.image

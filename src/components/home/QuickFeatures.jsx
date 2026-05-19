@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight, PlayCircle, Utensils } from 'lucide-react'
+import { FaArrowRight, FaPlayCircle, FaUtensils } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 const QuickFeatures = () => {
@@ -13,7 +13,7 @@ const QuickFeatures = () => {
           >
             <div className="flex items-start gap-4 w-full">
               <div className="w-14 h-14 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center shrink-0">
-                <Utensils className="text-[#ff6b6b]" size={28} />
+                <FaUtensils className="text-[#ff6b6b] text-3xl" />
               </div>
               <div className="min-w-0">
                 <h3 className="text-xl font-bold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">
@@ -23,7 +23,7 @@ const QuickFeatures = () => {
                   Enter ingredients you have and find recipes you can make
                 </p>
                 <div className="flex items-center gap-2 text-[#ff6b6b] font-medium">
-                  Try it <ArrowRight size={18} />
+                  Try it <FaArrowRight className="text-lg" />
                 </div>
               </div>
             </div>
@@ -35,7 +35,7 @@ const QuickFeatures = () => {
           >
             <div className="flex items-start gap-4 w-full">
               <div className="w-14 h-14 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center shrink-0">
-                <PlayCircle className="text-[#ff6b6b]" size={24} />
+                <FaPlayCircle className="text-[#ff6b6b] text-2xl" />
               </div>
               <div className="min-w-0">
                 <h3 className="text-xl font-bold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">
@@ -45,7 +45,7 @@ const QuickFeatures = () => {
                   Watch step-by-step video tutorials from professional chefs
                 </p>
                 <div className="flex items-center gap-2 text-[#ff6b6b] font-medium">
-                  Watch Now <ArrowRight size={18} />
+                  Watch Now <FaArrowRight className="text-lg" />
                 </div>
               </div>
             </div>

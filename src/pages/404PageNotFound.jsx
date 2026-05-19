@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { House, ChefHat, ArrowLeft } from 'lucide-react'
+import { FaHome, FaUtensils, FaArrowLeft } from 'react-icons/fa'
 import Noodle404 from '../components/404noodle'
 import '../css/404.css'
 
@@ -23,11 +23,11 @@ const PageNotFound = () => {
         </p>
         <div className="not-found-actions">
           <Link to="/" className="not-found-btn">
-            <House size={20} />
+            <FaHome className="text-xl" />
             Back Home
           </Link>
           <Link to="/recipes" className="not-found-link">
-            <ArrowLeft size={18} />
+            <FaArrowLeft className="text-lg" />
             Browse Recipes
           </Link>
         </div>

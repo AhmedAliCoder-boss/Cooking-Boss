@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Search, ChefHat, ArrowRight, Sparkles, X } from 'lucide-react'
+import { FaSearch, FaUtensils, FaArrowRight, FaStar, FaTimes } from 'react-icons/fa'
 import { spoonacularApi } from '../services/spoonacularApi'
 import { Link } from 'react-router-dom'
 
@@ -46,7 +46,7 @@ const FridgeFinder = () => {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff6b6b]/10 rounded-full mb-4">
-            <Sparkles className="text-[#ff6b6b]" size={18} />
+            <FaStar className="text-[#ff6b6b] text-base" />
             <span className="text-[#ff6b6b] font-medium">Powered by Spoonacular</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
@@ -74,7 +74,7 @@ const FridgeFinder = () => {
                   onClick={clearSearch}
                   className="p-2 text-slate-400 hover:text-white transition-colors"
                 >
-                  <X size={20} />
+                  <FaTimes className="text-xl" />
                 </button>
               )}
               <button
@@ -85,7 +85,7 @@ const FridgeFinder = () => {
                 {loading ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
-                  <Search size={20} />
+                  <FaSearch className="text-xl" />
                 )}
                 Find
               </button>
@@ -143,7 +143,7 @@ const FridgeFinder = () => {
                       </h3>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 text-slate-400 text-sm">
-                          <ChefHat size={16} />
+                          <FaUtensils className="text-base" />
                           <span>Uses {recipe.usedIngredientCount} of your items</span>
                         </div>
                         <Link
@@ -151,7 +151,7 @@ const FridgeFinder = () => {
                           className="flex items-center gap-1 text-[#ff6b6b] hover:text-[#ff5252] text-sm font-medium"
                         >
                           View
-                          <ArrowRight size={16} />
+                          <FaArrowRight className="text-base" />
                         </Link>
                       </div>
                     </div>
@@ -160,7 +160,7 @@ const FridgeFinder = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <ChefHat size={64} className="mx-auto text-slate-600 mb-4" />
+                <FaUtensils className="mx-auto text-slate-600 mb-4 text-6xl" />
                 <p className="text-slate-400 text-lg">
                   No recipes found. Try different ingredients!
                 </p>

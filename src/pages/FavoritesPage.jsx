@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Heart, ArrowRight, Trash2, ChefHat } from 'lucide-react'
+import { FaHeart, FaArrowRight, FaTrashAlt, FaUtensils } from 'react-icons/fa'
 import { useFavorites } from '../hooks/useFavorites'
 import { SkeletonGrid } from '../components/Skeleton'
 
@@ -29,7 +29,7 @@ const FavoritesPage = () => {
               onClick={clearFavorites}
               className="flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/10 rounded-full transition-colors self-start sm:self-auto"
             >
-              <Trash2 size={18} />
+              <FaTrashAlt className="text-lg" />
               Clear All
             </button>
           )}
@@ -39,7 +39,7 @@ const FavoritesPage = () => {
         {favoritesCount === 0 && (
           <div className="text-center py-20">
             <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Heart size={48} className="text-slate-600" />
+              <FaHeart className="text-slate-600 text-5xl" />
             </div>
             <h2 className="text-2xl font-semibold text-(--text-primary) mb-3">
               No favorites yet
@@ -52,7 +52,7 @@ const FavoritesPage = () => {
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#ff6b6b] text-white rounded-full hover:bg-[#ff5252] transition-colors"
             >
               Browse Recipes
-              <ArrowRight size={18} />
+              <FaArrowRight className="text-lg" />
             </Link>
           </div>
         )}
@@ -91,11 +91,11 @@ const FavoritesPage = () => {
                       onClick={() => removeFromFavorites(recipe.idMeal)}
                       className="p-2 text-[#ff6b6b] hover:bg-[#ff6b6b]/10 rounded-full transition-colors shrink-0"
                     >
-                      <Heart size={20} fill="#ff6b6b" />
+                      <FaHeart className="text-xl fill-[#ff6b6b]" />
                     </button>
                   </div>
                   <div className="flex items-center gap-2 mt-3 text-slate-400 text-sm">
-                    <ChefHat size={16} />
+                    <FaUtensils className="text-base" />
                     <span>{recipe.strArea} Cuisine</span>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Download } from 'lucide-react'
+import { FaDownload } from 'react-icons/fa'
 
 const PWAInstallButton = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -46,7 +46,7 @@ const PWAInstallButton = () => {
       onClick={handleInstallClick}
       className="flex items-center gap-2 px-4 py-2 bg-[#ff6b6b] text-white rounded-full hover:bg-[#ff5252] transition-colors"
     >
-      <Download size={18} />
+      <FaDownload className="text-lg" />
       <span>Install App</span>
     </button>
   )

@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, RefreshCw, ChefHat } from 'lucide-react'
+import { FaArrowRight, FaSync, FaUtensils } from 'react-icons/fa'
 import { mealDBApi } from '../../services/mealDBApi'
+import FavoriteButton from '../FavoriteButton'
 
 const FeaturedRecipes = () => {
   const [recipes, setRecipes] = useState([])
@@ -39,7 +40,7 @@ const FeaturedRecipes = () => {
           <div className="flex flex-wrap items-center gap-3">
             <h2 className="text-3xl font-semibold">Featured Recipes</h2>
             <div className="flex items-center gap-1 px-3 py-1 bg-[#ff6b6b]/10 rounded-full">
-              <RefreshCw size={14} className="text-[#ff6b6b]" />
+              <FaSync className="text-[#ff6b6b] text-sm" />
               <span className="text-[#ff6b6b] text-sm font-medium">From TheMealDB</span>
             </div>
           </div>
@@ -50,11 +51,11 @@ const FeaturedRecipes = () => {
               disabled={loading}
               className="flex items-center gap-2 px-4 py-2 bg-[#ff6b6b] hover:bg-[#ff5252] disabled:opacity-60 disabled:pointer-events-none rounded-lg transition-colors text-white"
             >
-              <RefreshCw size={18} />
+              <FaSync className="text-lg" />
               <span>Shuffle</span>
             </button>
             <Link to="/recipes" className="flex items-center gap-2 text-[#ff6b6b] hover:text-[#ff5252] transition-colors font-medium">
-              Browse All <ArrowRight size={20} />
+              Browse All <FaArrowRight className="text-xl" />
             </Link>
           </div>
         </div>
@@ -86,34 +87,44 @@ const FeaturedRecipes = () => {
         {!loading && recipes.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
             {recipes.map((recipe) => (
-              <Link
+              <div
                 key={recipe.idMeal}
-                to={`/recipe/${recipe.idMeal}`}
-                className="recipe-surface-card group flex flex-col h-full bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-[#ff6b6b]/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                className="recipe-surface-card group flex flex-col h-full bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-[#ff6b6b]/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#ff6b6b]/10"
               >
-                <div className="relative aspect-video overflow-hidden bg-slate-900/20">
-                  <img
-                    src={recipe.strMealThumb}
-                    alt={recipe.strMeal}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-3 right-3 max-w-[70%]">
-                    <span className="block truncate px-3 py-1 bg-black/60 backdrop-blur-sm text-white text-xs rounded-full">
-                      {recipe.strCategory || 'Recipe'}
-                    </span>
+                <Link to={`/recipe/${recipe.idMeal}`} className="block shrink-0">
+                  <div className="relative aspect-video overflow-hidden bg-slate-900/20">
+                    <img
+                      src={recipe.strMealThumb}
+                      alt={recipe.strMeal}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <span className="block truncate px-3 py-1 bg-black/60 backdrop-blur-sm text-white text-xs rounded-full">
+                        {recipe.strCategory || 'Recipe'}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="p-4 flex flex-col flex-1 min-h-0">
-                  <h3 className="text-(--text-primary) font-semibold text-base group-hover:text-[#ff6b6b] transition-colors line-clamp-2">
-                    {recipe.strMeal}
-                  </h3>
-                  <p className="text-slate-400 text-sm mt-2 flex items-center gap-1.5">
-                    <ChefHat size={14} className="shrink-0 opacity-80" />
+                </Link>
+                <div className="p-5 flex flex-col flex-1 min-h-0">
+                  <div className="flex items-start justify-between gap-3 mb-2 flex-1">
+                    <Link to={`/recipe/${recipe.idMeal}`} className="flex-1 min-w-0">
+                      <h3 className="text-(--text-primary) font-semibold text-lg line-clamp-2 group-hover:text-[#ff6b6b] transition-colors">
+                        {recipe.strMeal}
+                      </h3>
+                    </Link>
+                    <FavoriteButton 
+                      recipe={recipe} 
+                      size={20}
+                      className="shrink-0 mt-0.5"
+                    />
+                  </div>
+                  <p className="text-slate-400 text-sm mt-auto pt-2 flex items-center gap-1.5">
+                    <FaUtensils className="shrink-0 opacity-80 text-sm" />
                     <span className="truncate">{recipe.strArea || 'International'}</span>
                   </p>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         )}

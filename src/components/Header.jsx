@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Heart, ShoppingCart, Moon, Sun } from 'lucide-react'; 
+import { FaSearch, FaHeart, FaShoppingCart, FaMoon, FaSun } from 'react-icons/fa'; 
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useFavorites } from '../hooks/useFavorites'
 import { useShoppingList } from '../hooks/useShoppingList'
@@ -119,8 +119,6 @@ const Header = ({ onShoppingListClick }) => {
 
         {/* Header Actions */}
         <div className="header-actions">
-          <PWAInstallButton />
-          
           <div className="search-container">
             <input 
               type="text" 
@@ -131,7 +129,7 @@ const Header = ({ onShoppingListClick }) => {
               onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
             />
             <button className="search-btn" onClick={handleSearch}>
-              <Search size={18} />
+              <FaSearch className="text-lg" />
             </button>
           </div>
           
@@ -139,7 +137,7 @@ const Header = ({ onShoppingListClick }) => {
             to="/favorites"
             className="favorites-btn relative"
           >
-            <Heart size={20} />
+            <FaHeart className="text-xl" />
             {favoritesCount > 0 && (
               <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#ff6b6b] text-white text-xs rounded-full flex items-center justify-center">
                 {favoritesCount > 9 ? '9+' : favoritesCount}
@@ -152,7 +150,7 @@ const Header = ({ onShoppingListClick }) => {
             className="favorites-btn relative"
             aria-label="Shopping list"
           >
-            <ShoppingCart size={20} />
+            <FaShoppingCart className="text-xl" />
             {totalItems > 0 && (
               <span className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs rounded-full flex items-center justify-center">
                 {totalItems > 9 ? '9+' : totalItems}
@@ -165,7 +163,7 @@ const Header = ({ onShoppingListClick }) => {
             className="favorites-btn relative"
             aria-label="Toggle theme"
           >
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            {theme === 'light' ? <FaMoon className="text-xl" /> : <FaSun className="text-xl" />}
           </button>
         </div>
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { ArrowUp } from 'lucide-react'
+import { FaArrowUp } from 'react-icons/fa'
 
 const ScrollToTop = () => {
   const { pathname, search } = useLocation()
@@ -38,7 +38,7 @@ const ScrollToTop = () => {
       }`}
       aria-label="Scroll to top"
     >
-      <ArrowUp size={24} />
+      <FaArrowUp className="text-2xl" />
     </button>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { X, Trash2, Check, ShoppingCart, ExternalLink } from 'lucide-react'
+import { FaTimes, FaTrashAlt, FaCheck, FaShoppingCart, FaExternalLinkAlt } from 'react-icons/fa'
 import { getMycartSearchUrl } from '../utils/mycart'
 import { useShoppingList } from '../hooks/useShoppingList'
 
@@ -30,7 +30,7 @@ const ShoppingListPanel = ({ isOpen, onClose }) => {
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-white/10">
             <div className="flex items-center gap-3">
-              <ShoppingCart className="text-[#ff6b6b]" size={24} />
+              <FaShoppingCart className="text-[#ff6b6b] text-2xl" />
               <div>
                 <h2 className="text-xl font-bold text-white">Shopping List</h2>
                 <p className="text-slate-400 text-sm">
@@ -42,7 +42,7 @@ const ShoppingListPanel = ({ isOpen, onClose }) => {
               onClick={onClose}
               className="p-2 text-slate-400 hover:text-white transition-colors"
             >
-              <X size={24} />
+              <FaTimes className="text-2xl" />
             </button>
           </div>
 
@@ -50,7 +50,7 @@ const ShoppingListPanel = ({ isOpen, onClose }) => {
           <div className="flex-1 overflow-y-auto p-6">
             {shoppingList.length === 0 ? (
               <div className="text-center py-12">
-                <ShoppingCart size={64} className="mx-auto text-slate-600 mb-4" />
+                <FaShoppingCart className="mx-auto text-slate-600 mb-4 text-6xl" />
                 <p className="text-slate-400">Your shopping list is empty</p>
                 <p className="text-slate-500 text-sm mt-2">
                   Add ingredients from recipe pages
@@ -75,7 +75,7 @@ const ShoppingListPanel = ({ isOpen, onClose }) => {
                           : 'border-slate-400 hover:border-[#ff6b6b]'
                       }`}
                     >
-                      {item.checked && <Check size={14} className="text-white" />}
+                      {item.checked && <FaCheck className="text-white text-sm" />}
                     </button>
                     <div className="flex-1">
                       <p className={`font-medium ${item.checked ? 'text-slate-500 line-through' : 'text-(--text-primary)'}`}>
@@ -92,13 +92,13 @@ const ShoppingListPanel = ({ isOpen, onClose }) => {
                       className="p-2 text-green-400 hover:text-green-300 transition-colors"
                       title="Order from mycart.pk"
                     >
-                      <ExternalLink size={18} />
+                      <FaExternalLinkAlt className="text-lg" />
                     </a>
                     <button
                       onClick={() => removeFromList(item.id)}
                       className="p-2 text-slate-400 hover:text-red-400 transition-colors"
                     >
-                      <Trash2 size={18} />
+                      <FaTrashAlt className="text-lg" />
                     </button>
                   </div>
                 ))}
@@ -119,7 +119,7 @@ const ShoppingListPanel = ({ isOpen, onClose }) => {
                     rel="noopener noreferrer"
                     className="w-full py-3 bg-green-500/10 text-green-400 rounded-xl hover:bg-green-500/20 transition-colors flex items-center justify-center gap-2"
                   >
-                    <ExternalLink size={18} />
+                    <FaExternalLinkAlt className="text-lg" />
                     Order {uncheckedItems.length} item{uncheckedItems.length !== 1 ? 's' : ''} from mycart.pk
                   </a>
                 ) : null

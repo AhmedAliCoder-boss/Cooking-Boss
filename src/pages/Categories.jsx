@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Grid, Utensils } from 'lucide-react'
+import { FaTh, FaUtensils } from 'react-icons/fa'
 import { mealDBApi } from '../services/mealDBApi'
 import { getSingleCoverPhoto } from '../services/unsplashApi'
 import { SkeletonGrid } from '../components/Skeleton'
@@ -158,7 +158,7 @@ const Categories = () => {
                 : 'bg-white/10 text-slate-300 hover:bg-white/20'
             }`}
           >
-            <Utensils size={20} />
+            <FaUtensils className="text-xl" />
             Categories
           </button>
           <button
@@ -169,7 +169,7 @@ const Categories = () => {
                 : 'bg-white/10 text-slate-300 hover:bg-white/20'
             }`}
           >
-            <Grid size={20} />
+            <FaTh className="text-xl" />
             Cuisines
           </button>
         </div>

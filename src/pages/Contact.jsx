@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Mail, Phone, MapPin, Send, MessageSquare, ExternalLink, Globe } from 'lucide-react'
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCommentAlt, FaExternalLinkAlt, FaGlobe } from 'react-icons/fa'
 
 const Contact = () => {
   useEffect(() => {
@@ -26,19 +26,19 @@ const Contact = () => {
 
   const contactInfo = [
     {
-      icon: Mail,
+      icon: FaEnvelope,
       title: 'Email Us',
       value: 'support@cookingboss.com',
       link: 'mailto:support@cookingboss.com',
     },
     {
-      icon: Phone,
+      icon: FaPhone,
       title: 'Call Us',
       value: '+1 (555) 123-4567',
       link: 'tel:+15551234567',
     },
     {
-      icon: MapPin,
+      icon: FaMapMarkerAlt,
       title: 'Location',
       value: 'San Francisco, CA',
       link: null,
@@ -46,9 +46,9 @@ const Contact = () => {
   ]
 
   const socialLinks = [
-    { icon: ExternalLink, name: 'Website', link: 'https://cookingboss.com' },
-    { icon: Globe, name: 'Blog', link: 'https://blog.cookingboss.com' },
-    { icon: MessageSquare, name: 'Community', link: 'https://discord.com' },
+    { icon: FaExternalLinkAlt, name: 'Website', link: 'https://cookingboss.com' },
+    { icon: FaGlobe, name: 'Blog', link: 'https://blog.cookingboss.com' },
+    { icon: FaCommentAlt, name: 'Community', link: 'https://discord.com' },
   ]
 
   return (
@@ -57,7 +57,7 @@ const Contact = () => {
       <section className="px-4 sm:px-6 lg:px-8 mb-16">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff6b6b]/10 rounded-full mb-6">
-            <MessageSquare className="text-[#ff6b6b]" size={20} />
+            <FaCommentAlt className="text-[#ff6b6b] text-lg" />
             <span className="text-[#ff6b6b] font-medium">Get in Touch</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--text-primary) mb-6">
@@ -79,7 +79,7 @@ const Contact = () => {
                 className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all"
               >
                 <div className="w-12 h-12 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center mb-4">
-                  <info.icon className="text-[#ff6b6b]" size={24} />
+                  <info.icon className="text-[#ff6b6b] text-2xl" />
                 </div>
                 <h3 className="text-lg font-semibold text-(--text-primary) mb-2">{info.title}</h3>
                 {info.link ? (
@@ -169,7 +169,7 @@ const Contact = () => {
                   type="submit"
                   className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[#ff6b6b] text-white rounded-xl hover:bg-[#ff5252] transition-colors font-medium"
                 >
-                  <Send size={20} />
+                  <FaPaperPlane className="text-xl" />
                   Send Message
                 </button>
               </form>
@@ -191,7 +191,7 @@ const Contact = () => {
                 rel="noopener noreferrer"
                 className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-[#ff6b6b] hover:bg-white/20 transition-all"
               >
-                <social.icon size={24} />
+                <social.icon className="text-2xl" />
               </a>
             ))}
           </div>

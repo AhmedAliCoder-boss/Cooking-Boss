@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Shield, Eye, Database, Lock, AlertTriangle } from 'lucide-react'
+import { FaShieldAlt, FaEye, FaDatabase, FaLock, FaExclamationTriangle } from 'react-icons/fa'
 
 const PrivacyPolicy = () => {
   useEffect(() => {
@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
       <section className="px-4 sm:px-6 lg:px-8 mb-16">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff6b6b]/10 rounded-full mb-6">
-            <Shield className="text-[#ff6b6b]" size={20} />
+            <FaShieldAlt className="text-[#ff6b6b] text-lg" />
             <span className="text-[#ff6b6b] font-medium">Privacy Policy</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--text-primary) mb-6">
@@ -40,7 +40,7 @@ const PrivacyPolicy = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center">
-                <Database className="text-[#ff6b6b]" size={20} />
+                <FaDatabase className="text-[#ff6b6b] text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">Information We Collect</h2>
             </div>
@@ -77,7 +77,7 @@ const PrivacyPolicy = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center">
-                <Eye className="text-[#ff6b6b]" size={20} />
+                <FaEye className="text-[#ff6b6b] text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">How We Use Your Information</h2>
             </div>
@@ -95,7 +95,7 @@ const PrivacyPolicy = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center">
-                <Lock className="text-[#ff6b6b]" size={20} />
+                <FaLock className="text-[#ff6b6b] text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">Data Sharing & Disclosure</h2>
             </div>
@@ -132,7 +132,7 @@ const PrivacyPolicy = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center">
-                <Shield className="text-[#ff6b6b]" size={20} />
+                <FaShieldAlt className="text-[#ff6b6b] text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">Data Security</h2>
             </div>
@@ -170,7 +170,7 @@ const PrivacyPolicy = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center">
-                <AlertTriangle className="text-[#ff6b6b]" size={20} />
+                <FaExclamationTriangle className="text-[#ff6b6b] text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">Children's Privacy</h2>
             </div>

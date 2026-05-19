@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { File, AlertTriangle, CheckCircle, XCircle, Gavel } from 'lucide-react'
+import { FaFileAlt, FaExclamationTriangle, FaCheckCircle, FaTimesCircle, FaGavel } from 'react-icons/fa'
 
 const TermsOfService = () => {
   useEffect(() => {
@@ -11,7 +11,7 @@ const TermsOfService = () => {
       <section className="px-4 sm:px-6 lg:px-8 mb-16">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff6b6b]/10 rounded-full mb-6">
-            <File className="text-[#ff6b6b]" size={20} />
+            <FaFileAlt className="text-[#ff6b6b] text-lg" />
             <span className="text-[#ff6b6b] font-medium">Terms of Service</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--text-primary) mb-6">
@@ -30,7 +30,7 @@ const TermsOfService = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center">
-                <CheckCircle className="text-[#ff6b6b]" size={20} />
+                <FaCheckCircle className="text-[#ff6b6b] text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">Agreement to Terms</h2>
             </div>
@@ -60,7 +60,7 @@ const TermsOfService = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center">
-                <AlertTriangle className="text-[#ff6b6b]" size={20} />
+                <FaExclamationTriangle className="text-[#ff6b6b] text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">User Responsibilities</h2>
             </div>
@@ -80,7 +80,7 @@ const TermsOfService = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-red-500/10 rounded-lg flex items-center justify-center">
-                <XCircle className="text-red-500" size={20} />
+                <FaTimesCircle className="text-red-500 text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">Prohibited Activities</h2>
             </div>
@@ -100,7 +100,7 @@ const TermsOfService = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center">
-                <Gavel className="text-[#ff6b6b]" size={20} />
+                <FaGavel className="text-[#ff6b6b] text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">Intellectual Property</h2>
             </div>
@@ -150,7 +150,7 @@ const TermsOfService = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-yellow-500/10 rounded-lg flex items-center justify-center">
-                <AlertTriangle className="text-yellow-500" size={20} />
+                <FaExclamationTriangle className="text-yellow-500 text-lg" />
               </div>
               <h2 className="text-2xl font-bold text-(--text-primary)">Recipe Information Disclaimer</h2>
             </div>

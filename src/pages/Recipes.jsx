@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { Search, ChefHat, Clock } from 'lucide-react'
+import { FaSearch, FaUtensils, FaClock } from 'react-icons/fa'
 import { useRecipes, useSearch, useUnsplashPool } from '../hooks'
 import { useFavorites } from '../hooks/useFavorites'
 import { SkeletonGrid } from '../components/Skeleton'
@@ -150,7 +150,7 @@ const Recipes = () => {
               disabled={searchLoading}
               className="absolute right-2 top-1/2 -translate-y-1/2 p-3 bg-[#ff6b6b] text-white rounded-full hover:bg-[#ff5252] transition-colors disabled:opacity-50"
             >
-              <Search size={20} />
+              <FaSearch className="text-xl" />
             </button>
           </div>
         </form>
@@ -225,12 +225,12 @@ const Recipes = () => {
                   </div>
                   <div className="flex flex-wrap items-center gap-4 text-slate-400 text-sm mt-auto pt-2">
                     <span className="flex items-center gap-1">
-                      <ChefHat size={14} />
+                      <FaUtensils className="text-sm" />
                       {recipe.strArea || 'International'}
                     </span>
                     {recipe.strTags && (
                       <span className="flex items-center gap-1">
-                        <Clock size={14} />
+                        <FaClock className="text-sm" />
                         Easy
                       </span>
                     )}
@@ -257,7 +257,7 @@ const Recipes = () => {
         {/* Empty State */}
         {!isLoading && displayRecipes.length === 0 && (
           <div className="text-center py-20">
-            <ChefHat size={64} className="mx-auto text-(--text-secondary) mb-4" />
+            <FaUtensils className="mx-auto text-(--text-secondary) mb-4 text-6xl" />
             <p className="text-slate-400 text-lg">No recipes found. Try a different search!</p>
           </div>
         )}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Heart, ChefHat, Sparkles, Send, ExternalLink, MessageCircle, Globe } from "lucide-react";
+import { FaEnvelope, FaHeart, FaUtensils, FaStar, FaPaperPlane, FaExternalLinkAlt, FaCommentDots, FaGlobe } from "react-icons/fa";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -16,25 +16,29 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: ExternalLink, name: "Website", href: "https://cookingboss.com" },
-    { icon: MessageCircle, name: "Community", href: "https://discord.com" },
-    { icon: Globe, name: "Blog", href: "https://blog.cookingboss.com" },
+    { icon: FaExternalLinkAlt, name: "Website", href: "https://cookingboss.com" },
+    { icon: FaCommentDots, name: "Community", href: "https://discord.com" },
+    { icon: FaGlobe, name: "Blog", href: "https://blog.cookingboss.com" },
   ];
 
   const quickStats = [
-    { icon: ChefHat, value: "10K+", label: "Recipes" },
-    { icon: Heart, value: "50+", label: "Cuisines" },
-    { icon: Sparkles, value: "5", label: "API Sources" },
+    { icon: FaUtensils, value: "10K+", label: "Recipes" },
+    { icon: FaHeart, value: "50+", label: "Cuisines" },
+    { icon: FaStar, value: "5", label: "API Sources" },
   ];
 
   return (
     <footer className="app-footer print:hidden bg-slate-900 border-t border-white/10">
       {/* Newsletter Section */}
-      <div className="bg-gradient-to-r from-[#ff6b6b]/20 to-[#ff8e53]/20 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div 
+        className="border-b border-none bg-cover bg-center bg-no-repeat relative"
+        style={{ backgroundImage: "url('/src/images/newsletterbg.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
           <div className="max-w-2xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff6b6b]/10 rounded-full mb-4">
-              <Mail className="text-[#ff6b6b]" size={18} />
+              <FaEnvelope className="text-[#ff6b6b] text-lg" />
               <span className="text-[#ff6b6b] font-medium text-sm">Stay Updated</span>
             </div>
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
@@ -60,7 +64,7 @@ const Footer = () => {
                   type="submit"
                   className="px-6 py-3 bg-[#ff6b6b] text-white rounded-xl hover:bg-[#ff5252] transition-colors flex items-center justify-center gap-2 font-medium"
                 >
-                  <Send size={18} />
+                  <FaPaperPlane className="text-lg" />
                   Subscribe
                 </button>
               </form>
@@ -76,7 +80,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-[#ff6b6b] rounded-xl flex items-center justify-center">
-                <ChefHat className="text-white" size={24} />
+                <FaUtensils className="text-white text-2xl" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">Cooking Boss</h2>
@@ -98,7 +102,7 @@ const Footer = () => {
                   className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-slate-400 hover:text-[#ff6b6b] hover:bg-white/20 transition-all"
                   aria-label={social.name}
                 >
-                  <social.icon size={20} />
+                  <social.icon className="text-xl" />
                 </a>
               ))}
             </div>
@@ -185,7 +189,7 @@ const Footer = () => {
               {quickStats.map((stat) => (
                 <div key={stat.label} className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#ff6b6b]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <stat.icon className="text-[#ff6b6b]" size={20} />
+                    <stat.icon className="text-[#ff6b6b] text-xl" />
                   </div>
                   <div>
                     <p className="text-white font-semibold">{stat.value}</p>
@@ -204,7 +208,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-slate-400 text-sm">
             <p className="flex items-center gap-2">
               © {new Date().getFullYear()} Cooking Boss. Made with{" "}
-              <Heart size={14} className="text-[#ff6b6b] fill-[#ff6b6b]" />
+              <FaHeart className="text-[#ff6b6b] fill-[#ff6b6b] text-sm" />
               for food lovers everywhere.
             </p>
             <div className="flex items-center gap-6">

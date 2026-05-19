@@ -1,11 +1,11 @@
 import React from 'react'
-import { ChefHat } from 'lucide-react'
+import { FaUtensils } from 'react-icons/fa'
 
 const RecipeInstructions = ({ instructions }) => {
   return (
     <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
       <h2 className="text-xl font-bold text-(--text-primary) mb-6 flex items-center gap-2">
-        <ChefHat className="text-[#ff6b6b]" size={24} />
+        <FaUtensils className="text-[#ff6b6b] text-2xl" />
         Instructions
       </h2>
       <ol className="space-y-4">

@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react'
-import { ChefHat, Heart, Users, Sparkles, Mail, ExternalLink, Link as LinkIcon } from 'lucide-react'
-
-const GithubIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.38-.135-.345-.72-1.38-1.23-1.665-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-  </svg>
-)
+import { FaUtensils, FaHeart, FaUsers, FaStar, FaEnvelope, FaExternalLinkAlt, FaLink, FaGithub } from 'react-icons/fa'
 
 const About = () => {
   useEffect(() => {
@@ -13,22 +7,22 @@ const About = () => {
   }, [])
   const features = [
     {
-      icon: ChefHat,
+      icon: FaUtensils,
       title: 'Multiple Recipe Sources',
       description: 'Access recipes from TheMealDB, Spoonacular, and API Ninjas - all in one place.',
     },
     {
-      icon: Heart,
+      icon: FaHeart,
       title: 'Save Your Favorites',
       description: 'Bookmark recipes you love and build your personal cookbook.',
     },
     {
-      icon: Sparkles,
+      icon: FaStar,
       title: 'Smart Search',
       description: 'Find recipes by ingredients you have with our "What\'s in your fridge?" feature.',
     },
     {
-      icon: Users,
+      icon: FaUsers,
       title: 'Nutrition Analysis',
       description: 'Get detailed nutrition information powered by Edamam API.',
     },
@@ -48,7 +42,7 @@ const About = () => {
       <section className="px-4 sm:px-6 lg:px-8 mb-16">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff6b6b]/10 rounded-full mb-6">
-            <ChefHat className="text-[#ff6b6b]" size={20} />
+            <FaUtensils className="text-[#ff6b6b] text-lg" />
             <span className="text-[#ff6b6b] font-medium">About Cooking Boss</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--text-primary) mb-6">
@@ -75,7 +69,7 @@ const About = () => {
                 className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all"
               >
                 <div className="w-12 h-12 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center mb-4">
-                  <feature.icon className="text-[#ff6b6b]" size={24} />
+                  <feature.icon className="text-[#ff6b6b] text-2xl" />
                 </div>
                 <h3 className="text-xl font-semibold text-(--text-primary) mb-2">{feature.title}</h3>
                 <p className="text-slate-400">{feature.description}</p>
@@ -85,29 +79,77 @@ const About = () => {
         </div>
       </section>
 
-      {/* APIs */}
+      {/* Developer */}
       <section className="px-4 sm:px-6 lg:px-8 mb-16">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-(--text-primary) text-center mb-10">
-            Powered By <span className="text-[#ff6b6b]">5 APIs</span>
+            Meet the <span className="text-[#ff6b6b]">Developer</span>
           </h2>
-          <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
-            {apis.map((api, index) => (
-              <div
-                key={api.name}
-                className={`flex items-center justify-between p-4 ${
-                  index !== apis.length - 1 ? 'border-b border-white/10' : ''
-                }`}
-              >
-                <div>
-                  <h3 className="text-(--text-primary) font-semibold">{api.name}</h3>
-                  <p className="text-slate-400 text-sm">{api.purpose}</p>
-                </div>
-                <span className="px-3 py-1 bg-green-500/10 text-green-400 text-sm rounded-full">
-                  {api.free === true ? 'Free' : api.free}
-                </span>
+          <div className="bg-white/5 rounded-2xl border border-white/10 p-8">
+            <div className="flex flex-col md:flex-row items-center gap-6 mb-8">
+              <div className="w-24 h-24 bg-gradient-to-br from-[#ff6b6b] to-[#ff8e53] rounded-2xl flex items-center justify-center flex-shrink-0">
+                <FaUtensils className="text-white text-5xl" />
               </div>
-            ))}
+              <div className="text-center md:text-left">
+                <h3 className="text-2xl font-bold text-(--text-primary) mb-2">Ahmed Ali</h3>
+                <p className="text-slate-400 mb-3">Full Stack Developer | React Enthusiast</p>
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="px-3 py-1 bg-[#ff6b6b]/10 text-[#ff6b6b] text-sm rounded-full">Frontend</span>
+                  <span className="px-3 py-1 bg-blue-500/10 text-blue-400 text-sm rounded-full">Backend</span>
+                  <span className="px-3 py-1 bg-purple-500/10 text-purple-400 text-sm rounded-full">UI/UX</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-4 mb-8">
+              <div className="bg-white/5 rounded-xl p-4 text-center">
+                <div className="text-3xl font-bold text-[#ff6b6b] mb-1">5+</div>
+                <div className="text-slate-400 text-sm">Projects Built</div>
+              </div>
+              <div className="bg-white/5 rounded-xl p-4 text-center">
+                <div className="text-3xl font-bold text-[#ff6b6b] mb-1">3+</div>
+                <div className="text-slate-400 text-sm">Years Experience</div>
+              </div>
+              <div className="bg-white/5 rounded-xl p-4 text-center">
+                <div className="text-3xl font-bold text-[#ff6b6b] mb-1">100%</div>
+                <div className="text-slate-400 text-sm">Dedication</div>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold text-(--text-primary) mb-3">Tech Stack</h4>
+              <div className="flex flex-wrap gap-2">
+                {['React', 'Redux', 'Node.js', 'JavaScript', 'Tailwind CSS', 'Git'].map(
+                  (tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 bg-white/5 text-slate-300 text-sm rounded-lg border border-white/10"
+                    >
+                      {tech}
+                    </span>
+                  )
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4">
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 text-(--text-primary) rounded-xl hover:bg-white/20 transition-colors"
+              >
+                <FaGithub className="text-lg" />
+                GitHub
+              </a>
+              <a
+                href="mailto:developer@example.com"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#ff6b6b] text-white rounded-xl hover:bg-[#ff5252] transition-colors"
+              >
+                <FaEnvelope className="text-lg" />
+                Contact Me
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -145,7 +187,7 @@ const About = () => {
                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#ff6b6b] text-white rounded-full hover:bg-[#ff5252] transition-colors"
               >
                 Browse Recipes
-                <ExternalLink size={18} />
+                <FaExternalLinkAlt className="text-lg" />
               </a>
               <a
                 href="https://github.com"
@@ -153,13 +195,13 @@ const About = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-(--text-primary) rounded-full hover:bg-white/20 transition-colors"
               >
-                <GithubIcon />
+                <FaGithub className="text-lg" />
                 View on GitHub
               </a>
             </div>
           </div>
           <p className="text-slate-500 mt-8">
-            Made with <Heart size={14} className="inline text-[#ff6b6b] fill-[#ff6b6b]" /> by Cooking Boss Team
+            Made with <FaHeart className="inline text-[#ff6b6b] fill-[#ff6b6b] text-sm" /> by Cooking Boss Team
           </p>
         </div>
       </section>

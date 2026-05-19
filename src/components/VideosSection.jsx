@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { PlayCircle, Clock, Users, ChefHat } from 'lucide-react'
+import { FaPlayCircle, FaClock, FaUsers, FaUtensils, FaPlay } from 'react-icons/fa'
 import { tastyApi } from '../services/tastyApi'
 
 const VideosSection = () => {
@@ -70,7 +70,7 @@ const VideosSection = () => {
             rel="noopener noreferrer"
             className="hidden md:flex items-center gap-2 px-5 py-2 bg-[#ff6b6b] text-white rounded-full hover:bg-[#ff5252] transition-colors"
           >
-            <Play size={18} />
+            <FaPlay className="text-lg" />
             More Videos
           </a>
         </div>
@@ -91,7 +91,7 @@ const VideosSection = () => {
                 />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                   <div className="w-14 h-14 bg-[#ff6b6b] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <PlayCircle size={20} className="text-white ml-1" fill="white" />
+                    <FaPlayCircle className="text-white ml-1 text-lg" />
                   </div>
                 </div>
                 {video.video_url && (
@@ -112,13 +112,13 @@ const VideosSection = () => {
                 <div className="flex items-center gap-3 text-slate-400 text-sm">
                   {video.total_time_minutes && (
                     <span className="flex items-center gap-1">
-                      <Clock size={14} />
+                      <FaClock className="text-sm" />
                       {video.total_time_minutes}m
                     </span>
                   )}
                   {video.user_ratings && (
                     <span className="flex items-center gap-1">
-                      <Users size={14} />
+                      <FaUsers className="text-sm" />
                       {Math.round(video.user_ratings.score * 100)}% liked
                     </span>
                   )}
@@ -136,7 +136,7 @@ const VideosSection = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2 bg-[#ff6b6b] text-white rounded-full hover:bg-[#ff5252] transition-colors"
           >
-            <Play size={18} />
+            <FaPlay className="text-lg" />
             More Videos
           </a>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Search } from 'lucide-react'
+import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import '../../css/hero section.css'
 
@@ -27,7 +27,7 @@ const HeroSection = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button type="submit" className="hero-search-btn" aria-label="Search recipes">
-            <Search size={16} />
+            <FaSearch className="text-base" />
           </button>
         </form>
       </div>

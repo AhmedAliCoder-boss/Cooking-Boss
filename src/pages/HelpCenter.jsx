@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { CircleHelp, Search, ChevronDown, ChevronUp, BookOpen, MessageSquare, Mail, ExternalLink } from 'lucide-react'
+import { FaQuestionCircle, FaSearch, FaChevronDown, FaChevronUp, FaBook, FaCommentAlt, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa'
 
 const HelpCenter = () => {
   useEffect(() => {
@@ -109,7 +109,7 @@ const HelpCenter = () => {
       <section className="px-4 sm:px-6 lg:px-8 mb-16">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff6b6b]/10 rounded-full mb-6">
-            <CircleHelp className="text-[#ff6b6b]" size={20} />
+            <FaQuestionCircle className="text-[#ff6b6b] text-lg" />
             <span className="text-[#ff6b6b] font-medium">Help Center</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-(--text-primary) mb-6">
@@ -122,7 +122,7 @@ const HelpCenter = () => {
           {/* Search */}
           <div className="max-w-2xl mx-auto">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
               <input
                 type="text"
                 value={searchQuery}
@@ -144,7 +144,7 @@ const HelpCenter = () => {
               className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all group"
             >
               <div className="w-12 h-12 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center mb-4">
-                <BookOpen className="text-[#ff6b6b]" size={24} />
+                <FaBook className="text-[#ff6b6b] text-2xl" />
               </div>
               <h3 className="text-lg font-semibold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">
                 Fridge Finder Guide
@@ -156,7 +156,7 @@ const HelpCenter = () => {
               className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all group"
             >
               <div className="w-12 h-12 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center mb-4">
-                <MessageSquare className="text-[#ff6b6b]" size={24} />
+                <FaCommentAlt className="text-[#ff6b6b] text-2xl" />
               </div>
               <h3 className="text-lg font-semibold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">
                 Contact Support
@@ -168,7 +168,7 @@ const HelpCenter = () => {
               className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all group"
             >
               <div className="w-12 h-12 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center mb-4">
-                <Mail className="text-[#ff6b6b]" size={24} />
+                <FaEnvelope className="text-[#ff6b6b] text-2xl" />
               </div>
               <h3 className="text-lg font-semibold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">
                 Privacy Policy
@@ -219,9 +219,9 @@ const HelpCenter = () => {
                   >
                     <span className="text-(--text-primary) font-medium pr-4">{faq.question}</span>
                     {expandedFaq === faq.id ? (
-                      <ChevronUp className="text-[#ff6b6b] flex-shrink-0" size={20} />
+                      <FaChevronUp className="text-[#ff6b6b] flex-shrink-0 text-lg" />
                     ) : (
-                      <ChevronDown className="text-slate-400 flex-shrink-0" size={20} />
+                      <FaChevronDown className="text-slate-400 flex-shrink-0 text-lg" />
                     )}
                   </button>
                   {expandedFaq === faq.id && (
@@ -233,7 +233,7 @@ const HelpCenter = () => {
               ))
             ) : (
               <div className="text-center py-12">
-                <CircleHelp size={64} className="mx-auto text-slate-600 mb-4" />
+                <FaQuestionCircle className="mx-auto text-slate-600 mb-4 text-6xl" />
                 <p className="text-slate-400 text-lg">
                   No results found. Try a different search or category.
                 </p>
@@ -256,14 +256,14 @@ const HelpCenter = () => {
                 href="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#ff6b6b] text-white rounded-full hover:bg-[#ff5252] transition-colors"
               >
-                <MessageSquare size={20} />
+                <FaCommentAlt className="text-xl" />
                 Contact Support
               </a>
               <a
                 href="mailto:support@cookingboss.com"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-(--text-primary) rounded-full hover:bg-white/20 transition-colors"
               >
-                <Mail size={20} />
+                <FaEnvelope className="text-xl" />
                 Email Us
               </a>
             </div>
