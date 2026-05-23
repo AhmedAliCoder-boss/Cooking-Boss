@@ -12,28 +12,52 @@ const VideosSection = () => {
   }, [])
 
   const loadVideos = async () => {
-    try {
-      setLoading(true)
-      // Try feed first (more reliable), fallback to search
-      let data = await tastyApi.getFeed(8)
-      
-      // If feed is empty, try searching for popular recipes with videos
-      if (!data || data.length === 0) {
-        data = await tastyApi.searchVideos('popular', 0)
+    setLoading(true)
+    // Use YouTube cooking videos directly as primary solution
+    setVideos(getYouTubeFallbackVideos())
+    setLoading(false)
+  }
+
+  const getYouTubeFallbackVideos = () => {
+    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4']
+    return [
+      {
+        id: 'yt1',
+        name: 'Perfect Steak Recipe',
+        video_url: 'https://www.youtube.com/results?search_query=perfect+steak+recipe',
+        thumbnail_url: null,
+        bg_color: colors[0],
+        total_time_minutes: 8,
+        user_ratings: { score: 0.95 }
+      },
+      {
+        id: 'yt2',
+        name: 'Pasta Carbonara Tutorial',
+        video_url: 'https://www.youtube.com/results?search_query=pasta+carbonara+recipe',
+        thumbnail_url: null,
+        bg_color: colors[1],
+        total_time_minutes: 12,
+        user_ratings: { score: 0.92 }
+      },
+      {
+        id: 'yt3',
+        name: 'Homemade Pizza Guide',
+        video_url: 'https://www.youtube.com/results?search_query=homemade+pizza+recipe',
+        thumbnail_url: null,
+        bg_color: colors[2],
+        total_time_minutes: 15,
+        user_ratings: { score: 0.88 }
+      },
+      {
+        id: 'yt4',
+        name: 'Chicken Stir Fry',
+        video_url: 'https://www.youtube.com/results?search_query=chicken+stir+fry+recipe',
+        thumbnail_url: null,
+        bg_color: colors[3],
+        total_time_minutes: 10,
+        user_ratings: { score: 0.85 }
       }
-      
-      // Filter only items that have videos
-      const videosWithContent = Array.isArray(data) 
-        ? data.filter(item => item.video_url || item.original_video_url || item.thumbnail_url)
-        : []
-      
-      setVideos(videosWithContent.slice(0, 8))
-    } catch (error) {
-      // Silently fail - API may have subscription issues
-      setVideos([])
-    } finally {
-      setLoading(false)
-    }
+    ]
   }
 
   if (loading) {
@@ -83,12 +107,18 @@ const VideosSection = () => {
               className="group bg-slate-800 rounded-2xl overflow-hidden border border-white/5 hover:border-[#ff6b6b]/30 transition-all hover:-translate-y-1"
             >
               {/* Thumbnail */}
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  src={video.thumbnail_url || video.original_video_url}
-                  alt={video.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className="relative aspect-video overflow-hidden" style={{ backgroundColor: video.bg_color || '#1e293b' }}>
+                {video.thumbnail_url ? (
+                  <img
+                    src={video.thumbnail_url}
+                    alt={video.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <FaYoutube className="text-white/30 text-6xl" />
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                   <div className="w-14 h-14 bg-[#ff6b6b] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                     <FaPlayCircle className="text-white ml-1 text-lg" />

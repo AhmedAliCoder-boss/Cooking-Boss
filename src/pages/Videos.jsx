@@ -1,6 +1,140 @@
-import React, { useEffect, useState } from 'react'
-import { FaPlayCircle, FaClock, FaUsers, FaUtensils } from 'react-icons/fa'
-import { tastyApi } from '../services/tastyApi'
+import React, { useEffect, useState, useCallback, memo } from 'react'
+import { FaClock, FaUsers, FaUtensils, FaTimes, FaPlay } from 'react-icons/fa'
+import { youtubeApi } from '../services/youtubeApi'
+
+const getYouTubeFallbackVideos = () => {
+  // Use actual YouTube video IDs for direct embedding
+  return [
+    {
+      id: 'yt1',
+      name: 'Perfect Steak Recipe',
+      video_id: 'sP-NNiqC1gE',
+      thumbnail_url: null,
+      bg_color: '#ff6b6b',
+      total_time_minutes: 8,
+      user_ratings: { score: 0.95 }
+    },
+    {
+      id: 'yt2',
+      name: 'Pasta Carbonara Tutorial',
+      video_id: '2CqC9b1qFX8',
+      thumbnail_url: null,
+      bg_color: '#4ecdc4',
+      total_time_minutes: 12,
+      user_ratings: { score: 0.92 }
+    },
+    {
+      id: 'yt3',
+      name: 'Homemade Pizza Guide',
+      video_id: 'lB4E5e3TQzY',
+      thumbnail_url: null,
+      bg_color: '#45b7d1',
+      total_time_minutes: 15,
+      user_ratings: { score: 0.88 }
+    },
+    {
+      id: 'yt4',
+      name: 'French Omelette Recipe',
+      video_id: 'dOUtVtIqK1o',
+      thumbnail_url: null,
+      bg_color: '#96ceb4',
+      total_time_minutes: 6,
+      user_ratings: { score: 0.90 }
+    },
+    {
+      id: 'yt5',
+      name: 'Chicken Stir Fry',
+      video_id: 'J588Y2P1bMA',
+      thumbnail_url: null,
+      bg_color: '#ffeaa7',
+      total_time_minutes: 10,
+      user_ratings: { score: 0.85 }
+    },
+    {
+      id: 'yt6',
+      name: 'Chocolate Cake Recipe',
+      video_id: 'Vq1NP3Y6Dx4',
+      thumbnail_url: null,
+      bg_color: '#dfe6e9',
+      total_time_minutes: 8,
+      user_ratings: { score: 0.93 }
+    },
+    {
+      id: 'yt7',
+      name: 'Caesar Salad Tutorial',
+      video_id: 'QK6zY6n9e2k',
+      thumbnail_url: null,
+      bg_color: '#fd79a8',
+      total_time_minutes: 7,
+      user_ratings: { score: 0.87 }
+    },
+    {
+      id: 'yt8',
+      name: 'Roast Chicken Guide',
+      video_id: 'JyNUrXGjX3c',
+      thumbnail_url: null,
+      bg_color: '#a29bfe',
+      total_time_minutes: 45,
+      user_ratings: { score: 0.91 }
+    }
+  ]
+}
+
+const VideoCard = memo(({ video, onVideoClick }) => {
+  return (
+    <div
+      onClick={() => onVideoClick(video)}
+      className="group bg-slate-800 rounded-2xl overflow-hidden border border-white/5 hover:border-[#ff6b6b]/30 transition-all hover:-translate-y-1 cursor-pointer"
+    >
+      {/* Video Thumbnail */}
+      <div className="relative aspect-video overflow-hidden bg-slate-900">
+        {video.thumbnail_url ? (
+          <img
+            src={video.thumbnail_url}
+            alt={video.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div 
+            className="w-full h-full flex items-center justify-center"
+            style={{ backgroundColor: video.bg_color }}
+          >
+            <FaPlay className="text-white text-4xl opacity-80" />
+          </div>
+        )}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <FaPlay className="text-white text-5xl" />
+        </div>
+      </div>
+
+      {/* Info */}
+      <div className="p-4">
+        <h3 className="text-(--text-primary) font-semibold mb-2 line-clamp-2 group-hover:text-[#ff6b6b] transition-colors">
+          {video.name}
+        </h3>
+        {video.channel_title && (
+          <p className="text-slate-400 text-sm mb-2">{video.channel_title}</p>
+        )}
+        <div className="flex items-center gap-3 text-slate-400 text-sm">
+          {video.total_time_minutes && (
+            <span className="flex items-center gap-1">
+              <FaClock className="text-sm" />
+              {video.total_time_minutes}m
+            </span>
+          )}
+          {video.user_ratings && (
+            <span className="flex items-center gap-1">
+              <FaUsers className="text-sm" />
+              {Math.round(video.user_ratings.score * 100)}% liked
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+})
+
+VideoCard.displayName = 'VideoCard'
 
 const Videos = () => {
   useEffect(() => {
@@ -8,35 +142,91 @@ const Videos = () => {
   }, [])
   const [videos, setVideos] = useState([])
   const [loading, setLoading] = useState(true)
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [selectedVideo, setSelectedVideo] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   useEffect(() => {
-    loadVideos()
-  }, [])
+    if (!hasLoaded) {
+      loadVideos()
+      setHasLoaded(true)
+    }
+  }, [hasLoaded])
 
   const loadVideos = async () => {
+    setLoading(true)
     try {
-      setLoading(true)
-      // Try feed first (more reliable), fallback to search
-      let data = await tastyApi.getFeed(12)
-      
-      // If feed is empty, try searching for popular recipes with videos
-      if (!data || data.length === 0) {
-        data = await tastyApi.searchVideos('popular', 0)
+      // Check localStorage for cached videos first
+      const cachedVideos = localStorage.getItem('cookingVideos')
+      if (cachedVideos) {
+        setVideos(JSON.parse(cachedVideos))
+        setLoading(false)
+        return
       }
-      
-      // Filter only items that have videos
-      const videosWithContent = Array.isArray(data) 
-        ? data.filter(item => item.video_url || item.original_video_url || item.thumbnail_url)
-        : []
-      
-      setVideos(videosWithContent.slice(0, 12))
+
+      // Try to fetch from YouTube API first
+      const youtubeVideos = await youtubeApi.getRandomCookingVideos(12)
+      setVideos(youtubeVideos)
+      // Cache the results
+      localStorage.setItem('cookingVideos', JSON.stringify(youtubeVideos))
     } catch (error) {
-      // Silently fail - API may have subscription issues
-      setVideos([])
+      console.error('Failed to fetch YouTube videos, using fallback:', error)
+      // Fallback to hardcoded videos if API fails
+      const fallbackVideos = getYouTubeFallbackVideos()
+      setVideos(fallbackVideos)
+      localStorage.setItem('cookingVideos', JSON.stringify(fallbackVideos))
     } finally {
       setLoading(false)
     }
   }
+
+  const loadMoreVideos = useCallback(async () => {
+    setLoadingMore(true)
+    try {
+      // Fetch more random videos
+      const moreVideos = await youtubeApi.getRandomCookingVideos(12)
+      setVideos(prev => {
+        const updated = [...prev, ...moreVideos]
+        // Update cache with new videos
+        localStorage.setItem('cookingVideos', JSON.stringify(updated))
+        return updated
+      })
+    } catch (error) {
+      console.error('Failed to load more videos:', error)
+      // Add fallback videos if API fails
+      const fallbackVideos = getYouTubeFallbackVideos()
+      setVideos(prev => {
+        const updated = [...prev, ...fallbackVideos]
+        localStorage.setItem('cookingVideos', JSON.stringify(updated))
+        return updated
+      })
+    } finally {
+      setLoadingMore(false)
+    }
+  }, [])
+
+  const handleVideoClick = useCallback((video) => {
+    setSelectedVideo(video)
+    setIsModalOpen(true)
+    document.body.style.overflow = 'hidden'
+  }, [])
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false)
+    setSelectedVideo(null)
+    document.body.style.overflow = 'unset'
+  }, [])
+
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeModal()
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [isModalOpen, closeModal])
 
   if (loading) {
     return (
@@ -71,63 +261,84 @@ const Videos = () => {
             Cooking <span className="text-[#ff6b6b]">Videos</span>
           </h1>
           <p className="text-slate-400">
-            Watch step-by-step video tutorials from Tasty
+            Watch step-by-step video tutorials from our kitchen
           </p>
         </div>
 
         {/* Videos Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {videos.map((video, index) => (
-            <div
+            <VideoCard
               key={video.id || index}
-              className="group bg-slate-800 rounded-2xl overflow-hidden border border-white/5 hover:border-[#ff6b6b]/30 transition-all hover:-translate-y-1"
-            >
-              {/* Thumbnail */}
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  src={video.thumbnail_url || video.original_video_url}
-                  alt={video.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                  <div className="w-14 h-14 bg-[#ff6b6b] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <FaPlayCircle className="text-white ml-1 text-lg" />
-                  </div>
-                </div>
-                {video.video_url && (
-                  <a
-                    href={video.video_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute inset-0"
-                  />
-                )}
-              </div>
-
-              {/* Info */}
-              <div className="p-4">
-                <h3 className="text-(--text-primary) font-semibold mb-2 line-clamp-2 group-hover:text-[#ff6b6b] transition-colors">
-                  {video.name}
-                </h3>
-                <div className="flex items-center gap-3 text-slate-400 text-sm">
-                  {video.total_time_minutes && (
-                    <span className="flex items-center gap-1">
-                      <FaClock className="text-sm" />
-                      {video.total_time_minutes}m
-                    </span>
-                  )}
-                  {video.user_ratings && (
-                    <span className="flex items-center gap-1">
-                      <FaUsers className="text-sm" />
-                      {Math.round(video.user_ratings.score * 100)}% liked
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
+              video={video}
+              onVideoClick={handleVideoClick}
+            />
           ))}
         </div>
+
+        {/* Load More Button */}
+        <div className="mt-12 text-center">
+          <button
+            onClick={loadMoreVideos}
+            disabled={loadingMore}
+            className="px-8 py-3 bg-[#ff6b6b] hover:bg-[#ff5252] text-white font-semibold rounded-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          >
+            {loadingMore ? (
+              <span className="flex items-center gap-2">
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                Loading...
+              </span>
+            ) : (
+              'Load More Videos'
+            )}
+          </button>
+        </div>
       </div>
+
+      {/* Video Modal */}
+      {isModalOpen && selectedVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-5xl">
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute -top-12 right-0 text-white hover:text-[#ff6b6b] transition-colors"
+              aria-label="Close modal"
+            >
+              <FaTimes className="text-3xl" />
+            </button>
+
+            {/* Video Container */}
+            <div className="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="aspect-w-16 aspect-h-9 w-full">
+                <iframe
+                  src={`https://www.youtube.com/embed/${selectedVideo.video_id}?autoplay=1&rel=0&modestbranding=1&showinfo=0&controls=1&enablejsapi=1`}
+                  title={selectedVideo.name}
+                  className="w-full h-full"
+                  style={{ minHeight: '400px' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+
+              {/* Video Info */}
+              <div className="p-6">
+                <h2 className="text-2xl font-bold text-(--text-primary) mb-2">
+                  {selectedVideo.name}
+                </h2>
+                {selectedVideo.channel_title && (
+                  <p className="text-slate-400 mb-4">{selectedVideo.channel_title}</p>
+                )}
+                {selectedVideo.description && (
+                  <p className="text-slate-300 text-sm line-clamp-3">
+                    {selectedVideo.description}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
