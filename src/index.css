@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@media print {
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .recipe-print-root {
+    background: #fff !important;
+    color: #0f172a !important;
+    padding-top: 0 !important;
+  }
+
+  .recipe-print-root .text-white,
+  .recipe-print-root .text-slate-300 {
+    color: #0f172a !important;
+  }
+
+  .recipe-print-hero {
+    max-height: 280px;
+    object-fit: cover;
+  }
+}
