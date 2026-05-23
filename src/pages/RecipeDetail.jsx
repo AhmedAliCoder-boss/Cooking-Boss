@@ -147,29 +147,7 @@ const RecipeDetail = () => {
   }
 
   const handlePrint = () => {
-    // Prepare recipe data for print template
-    const recipeData = {
-      image: unsplashHero?.heroUrl || currentRecipe.strMealThumb,
-      category: currentRecipe.strCategory,
-      title: currentRecipe.strMeal,
-      area: currentRecipe.strArea,
-      time: recipeStats.duration,
-      servings: recipeStats.servings,
-      calories: recipeStats.calories,
-      ingredients: ingredients.map(ing => `${ing.measure} ${ing.ingredient}`),
-      instructions: instructions
-    }
-
-    // Open print template in new window
-    const printWindow = window.open('/print-template.html', '_blank', 'width=800,height=1000')
-    
-    // Wait for window to load, then send recipe data
-    printWindow.onload = () => {
-      printWindow.postMessage({ type: 'RECIPE_DATA', recipe: recipeData }, '*')
-      setTimeout(() => {
-        printWindow.print()
-      }, 500)
-    }
+    window.print()
   }
 
   const handleAddToShoppingList = (ingredient, measure) => {
