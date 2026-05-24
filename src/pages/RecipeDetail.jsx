@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link, useSearchParams } from 'react-router-dom'
-import { FaArrowLeft, FaClock, FaUsers, FaUtensils, FaHeart, FaPrint, FaFire, FaPlayCircle, FaTimes, FaPlay } from 'react-icons/fa'
+import { FaArrowLeft, FaClock, FaUsers, FaUtensils, FaHeart, FaFilePdf, FaFire, FaPlayCircle, FaTimes, FaPlay } from 'react-icons/fa'
 import { useRecipes } from '../hooks'
 import { useFavorites } from '../hooks/useFavorites'
 import { useShoppingList } from '../hooks/useShoppingList'
@@ -11,6 +11,7 @@ import { SkeletonRecipeDetail } from '../components/Skeleton'
 import RecipeIngredients from '../components/recipe/RecipeIngredients'
 import RecipeInstructions from '../components/recipe/RecipeInstructions'
 import { youtubeApi } from '../services/youtubeApi'
+import { downloadRecipePDF } from '../utils/printTemplate'
 
 const RecipeDetail = () => {
   const { id } = useParams()
@@ -146,8 +147,13 @@ const RecipeDetail = () => {
       .filter(step => step.trim().length > 0)
   }
 
-  const handlePrint = () => {
-    window.print()
+  const handleDownload = () => {
+    downloadRecipePDF(
+      currentRecipe,
+      ingredients,
+      instructions,
+      recipeStats
+    )
   }
 
   const handleAddToShoppingList = (ingredient, measure) => {
@@ -234,11 +240,11 @@ const RecipeDetail = () => {
           
           <div className="flex items-center gap-3">
             <button
-              onClick={handlePrint}
+              onClick={handleDownload}
               className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-sm text-white rounded-full hover:bg-black/60 transition-colors print:hidden"
             >
-              <FaPrint className="text-lg" />
-              <span className="hidden sm:inline">Print</span>
+              <FaFilePdf className="text-lg" />
+              <span className="hidden sm:inline">Download PDF</span>
             </button>
             <button
               onClick={() => toggleFavorite(currentRecipe)}
