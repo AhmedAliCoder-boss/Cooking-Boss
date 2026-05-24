@@ -20,6 +20,10 @@ import Contact from './pages/Contact'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import HelpCenter from './pages/HelpCenter'
+import UserGuide from './pages/UserGuide'
+import InvestmentOverview from './pages/InvestmentOverview'
+import Readme from './pages/Readme'
+import ReduxSetup from './pages/ReduxSetup'
 import { ThemeProvider } from './context/ThemeContext'
 import './css/animations.css'
 import './css/theme.css'
@@ -46,6 +50,10 @@ const App = () => {
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/help" element={<HelpCenter />} />
+              <Route path="/user-guide" element={<UserGuide />} />
+              <Route path="/investment-overview" element={<InvestmentOverview />} />
+              <Route path="/readme" element={<Readme />} />
+              <Route path="/redux-setup" element={<ReduxSetup />} />
               <Route path="/offline" element={<Offline />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>

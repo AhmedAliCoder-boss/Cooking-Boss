@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { FaQuestionCircle, FaSearch, FaChevronDown, FaChevronUp, FaBook, FaCommentAlt, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import { FaQuestionCircle, FaSearch, FaChevronDown, FaChevronUp, FaBook, FaCommentAlt, FaEnvelope, FaExternalLinkAlt, FaFileAlt, FaTimes } from 'react-icons/fa'
 
 const HelpCenter = () => {
   useEffect(() => {
@@ -8,6 +9,8 @@ const HelpCenter = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedFaq, setExpandedFaq] = useState(null)
   const [activeCategory, setActiveCategory] = useState('all')
+  const [selectedDoc, setSelectedDoc] = useState(null)
+  const [showDocs, setShowDocs] = useState(false)
 
   const categories = [
     { id: 'all', name: 'All Topics' },
@@ -15,6 +18,41 @@ const HelpCenter = () => {
     { id: 'recipes', name: 'Recipes' },
     { id: 'account', name: 'Account & Settings' },
     { id: 'technical', name: 'Technical Issues' },
+  ]
+
+  const documentationFiles = [
+    {
+      id: 'user-guide',
+      title: 'User Guide',
+      description: 'Complete guide for using Cooking Boss - step by step instructions for all features',
+      icon: FaBook,
+      file: '/user-guide',
+      target: '_self'
+    },
+    {
+      id: 'investment',
+      title: 'Investment Overview',
+      description: 'Technical and business overview for investors - explains the technology and market potential',
+      icon: FaFileAlt,
+      file: '/investment-overview',
+      target: '_self'
+    },
+    {
+      id: 'readme',
+      title: 'README',
+      description: 'Technical documentation for developers - setup, features, and project structure',
+      icon: FaFileAlt,
+      file: '/readme',
+      target: '_self'
+    },
+    {
+      id: 'redux',
+      title: 'Redux Setup',
+      description: 'Documentation about Redux state management implementation',
+      icon: FaFileAlt,
+      file: '/redux-setup',
+      target: '_self'
+    },
   ]
 
   const faqs = [
@@ -163,21 +201,76 @@ const HelpCenter = () => {
               </h3>
               <p className="text-slate-400 text-sm">Get personalized help from our team</p>
             </a>
-            <a
-              href="/privacy"
-              className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all group"
+            <button
+              onClick={() => setShowDocs(!showDocs)}
+              className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all group text-left w-full"
             >
               <div className="w-12 h-12 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center mb-4">
-                <FaEnvelope className="text-[#ff6b6b] text-2xl" />
+                <FaFileAlt className="text-[#ff6b6b] text-2xl" />
               </div>
               <h3 className="text-lg font-semibold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">
-                Privacy Policy
+                Documentation
               </h3>
-              <p className="text-slate-400 text-sm">Learn about how we protect your data</p>
-            </a>
+              <p className="text-slate-400 text-sm">View all documentation files</p>
+            </button>
           </div>
         </div>
       </section>
+
+      {/* Documentation Section */}
+      {showDocs && (
+        <section className="px-4 sm:px-6 lg:px-8 mb-16">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-(--text-primary) text-center mb-10">
+              Documentation <span className="text-[#ff6b6b]">Library</span>
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {documentationFiles.map((doc) => (
+                doc.target === '_blank' ? (
+                  <a
+                    key={doc.id}
+                    href={doc.file}
+                    target={doc.target}
+                    rel="noopener noreferrer"
+                    className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all group"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <doc.icon className="text-[#ff6b6b] text-2xl" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors flex items-center gap-2">
+                          {doc.title}
+                          <FaExternalLinkAlt className="text-xs text-slate-400" />
+                        </h3>
+                        <p className="text-slate-400 text-sm">{doc.description}</p>
+                      </div>
+                    </div>
+                  </a>
+                ) : (
+                  <Link
+                    key={doc.id}
+                    to={doc.file}
+                    className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-[#ff6b6b]/30 transition-all group"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <doc.icon className="text-[#ff6b6b] text-2xl" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-(--text-primary) mb-2 group-hover:text-[#ff6b6b] transition-colors">
+                          {doc.title}
+                        </h3>
+                        <p className="text-slate-400 text-sm">{doc.description}</p>
+                      </div>
+                    </div>
+                  </Link>
+                )
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Category Filter */}
       <section className="px-4 sm:px-6 lg:px-8 mb-8">

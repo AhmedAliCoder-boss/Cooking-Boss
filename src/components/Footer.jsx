@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEnvelope, FaHeart, FaUtensils, FaStar, FaPaperPlane, FaExternalLinkAlt, FaCommentDots, FaGlobe } from "react-icons/fa";
+import newsletterBg from '../images/newsletterbg.jpg';
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -62,7 +63,7 @@ const Footer = () => {
       {/* Newsletter Section */}
       <div 
         className="border-b border-none bg-cover bg-center bg-no-repeat relative"
-        style={{ backgroundImage: "url('/src/images/newsletterbg.jpg')" }}
+        style={{ backgroundImage: `url(${newsletterBg})` }}
       >
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
