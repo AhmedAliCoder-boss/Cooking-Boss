@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback, memo } from 'react'
-import { FaClock, FaUsers, FaUtensils, FaTimes, FaPlay } from 'react-icons/fa'
+import React, { useEffect, useState, useCallback, memo, useMemo } from 'react'
+import { FaClock, FaUsers, FaUtensils, FaTimes, FaPlay, FaSearch } from 'react-icons/fa'
 import { youtubeApi } from '../services/youtubeApi'
 
 const getYouTubeFallbackVideos = () => {
@@ -108,23 +108,23 @@ const VideoCard = memo(({ video, onVideoClick }) => {
       </div>
 
       {/* Info */}
-      <div className="p-4">
-        <h3 className="text-(--text-primary) font-semibold mb-2 line-clamp-2 group-hover:text-[#ff6b6b] transition-colors">
+      <div className="p-3 sm:p-4">
+        <h3 className="text-(--text-primary) font-semibold mb-2 line-clamp-2 group-hover:text-[#ff6b6b] transition-colors text-sm sm:text-base">
           {video.name}
         </h3>
         {video.channel_title && (
-          <p className="text-slate-400 text-sm mb-2">{video.channel_title}</p>
+          <p className="text-slate-400 text-xs sm:text-sm mb-2">{video.channel_title}</p>
         )}
-        <div className="flex items-center gap-3 text-slate-400 text-sm">
+        <div className="flex items-center gap-2 sm:gap-3 text-slate-400 text-xs sm:text-sm">
           {video.total_time_minutes && (
             <span className="flex items-center gap-1">
-              <FaClock className="text-sm" />
+              <FaClock className="text-xs sm:text-sm" />
               {video.total_time_minutes}m
             </span>
           )}
           {video.user_ratings && (
             <span className="flex items-center gap-1">
-              <FaUsers className="text-sm" />
+              <FaUsers className="text-xs sm:text-sm" />
               {Math.round(video.user_ratings.score * 100)}% liked
             </span>
           )}
@@ -146,6 +146,7 @@ const Videos = () => {
   const [selectedVideo, setSelectedVideo] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [hasLoaded, setHasLoaded] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     if (!hasLoaded) {
@@ -228,6 +229,17 @@ const Videos = () => {
     return () => window.removeEventListener('keydown', handleEscape)
   }, [isModalOpen, closeModal])
 
+  // Filter videos based on search query
+  const filteredVideos = useMemo(() => {
+    if (!searchQuery.trim()) return videos
+    const query = searchQuery.toLowerCase()
+    return videos.filter(video => 
+      video.name?.toLowerCase().includes(query) ||
+      video.channel_title?.toLowerCase().includes(query) ||
+      video.description?.toLowerCase().includes(query)
+    )
+  }, [videos, searchQuery])
+
   if (loading) {
     return (
       <main className="min-h-screen bg-slate-950 pt-24 pb-16 px-4 sm:px-6 lg:px-8">
@@ -265,69 +277,104 @@ const Videos = () => {
           </p>
         </div>
 
-        {/* Videos Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {videos.map((video, index) => (
-            <VideoCard
-              key={video.id || index}
-              video={video}
-              onVideoClick={handleVideoClick}
+        {/* Search Bar */}
+        <div className="mb-6 sm:mb-8">
+          <div className="relative max-w-2xl mx-auto">
+            <FaSearch className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm sm:text-base" />
+            <input
+              type="text"
+              placeholder="Search videos..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 sm:pl-12 pr-8 sm:pr-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:border-[#ff6b6b]/50 transition-colors text-sm"
             />
-          ))}
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+              >
+                <FaTimes className="text-sm" />
+              </button>
+            )}
+          </div>
+          {searchQuery && (
+            <p className="text-center text-slate-400 text-xs sm:text-sm mt-2">
+              Found {filteredVideos.length} video{filteredVideos.length !== 1 ? 's' : ''}
+            </p>
+          )}
         </div>
 
+        {/* Videos Grid */}
+        {filteredVideos.length === 0 ? (
+          <div className="text-center py-12 sm:py-16">
+            <FaSearch className="text-4xl sm:text-6xl text-slate-600 mx-auto mb-4" />
+            <p className="text-slate-400 text-sm sm:text-lg">No videos found matching "{searchQuery}"</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            {filteredVideos.map((video, index) => (
+              <VideoCard
+                key={video.id || index}
+                video={video}
+                onVideoClick={handleVideoClick}
+              />
+            ))}
+          </div>
+        )}
+
         {/* Load More Button */}
-        <div className="mt-12 text-center">
-          <button
-            onClick={loadMoreVideos}
-            disabled={loadingMore}
-            className="px-8 py-3 bg-[#ff6b6b] hover:bg-[#ff5252] text-white font-semibold rounded-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-          >
-            {loadingMore ? (
-              <span className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                Loading...
-              </span>
-            ) : (
-              'Load More Videos'
-            )}
-          </button>
-        </div>
+        {!searchQuery && (
+          <div className="mt-8 sm:mt-12 text-center">
+            <button
+              onClick={loadMoreVideos}
+              disabled={loadingMore}
+              className="px-6 sm:px-8 py-2.5 sm:py-3 bg-[#ff6b6b] hover:bg-[#ff5252] text-white font-semibold rounded-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm sm:text-base"
+            >
+              {loadingMore ? (
+                <span className="flex items-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white"></div>
+                  Loading...
+                </span>
+              ) : (
+                'Load More Videos'
+              )}
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Video Modal */}
       {isModalOpen && selectedVideo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="relative w-full max-w-5xl">
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute -top-12 right-0 text-white hover:text-[#ff6b6b] transition-colors"
+              className="absolute -top-10 sm:-top-12 right-0 text-white hover:text-[#ff6b6b] transition-colors z-10"
               aria-label="Close modal"
             >
-              <FaTimes className="text-3xl" />
+              <FaTimes className="text-2xl sm:text-3xl" />
             </button>
 
             {/* Video Container */}
             <div className="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl">
-              <div className="aspect-w-16 aspect-h-9 w-full">
+              <div className="relative w-full pt-[56.25%]">
                 <iframe
                   src={`https://www.youtube.com/embed/${selectedVideo.video_id}?autoplay=1&rel=0&modestbranding=1&showinfo=0&controls=1&enablejsapi=1`}
                   title={selectedVideo.name}
-                  className="w-full h-full"
-                  style={{ minHeight: '400px' }}
+                  className="absolute inset-0 w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
               </div>
 
               {/* Video Info */}
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-(--text-primary) mb-2">
+              <div className="p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-bold text-(--text-primary) mb-2">
                   {selectedVideo.name}
                 </h2>
                 {selectedVideo.channel_title && (
-                  <p className="text-slate-400 mb-4">{selectedVideo.channel_title}</p>
+                  <p className="text-slate-400 mb-4 text-sm">{selectedVideo.channel_title}</p>
                 )}
                 {selectedVideo.description && (
                   <p className="text-slate-300 text-sm line-clamp-3">

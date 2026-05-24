@@ -85,21 +85,28 @@ const CategoriesSection = () => {
             <Link
               key={category.id}
               to={`/recipes?category=${category.id}`}
-              className="category-card group relative overflow-hidden rounded-[2rem] border p-6 text-center transition duration-300 hover:-translate-y-1"
+              className="category-card group relative h-48 overflow-hidden rounded-[2rem] border transition duration-300 hover:-translate-y-1"
             >
-              <div className="pointer-events-none absolute inset-x-6 -top-8 h-24 rounded-full accent-glow opacity-80" />
-              {index < 3 && (
-                <span className="absolute right-5 top-5 rounded-full bg-orange-500 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-white shadow-lg">
-                  Top
-                </span>
-              )}
+              {/* Background Image */}
               <img
                 src={imgSrc}
                 alt={cover?.alt || category.title}
-                className="mx-auto h-24 w-24 rounded-2xl object-cover drop-shadow-card transition-transform duration-300 group-hover:scale-110"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <h3 className="mt-6 text-lg font-semibold text-inherit">{category.title}</h3>
-              <p className="mt-2 text-sm category-description">{category.description}</p>
+              
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+              
+              {/* Content */}
+              <div className="relative h-full flex flex-col justify-end p-6 text-center">
+                {index < 3 && (
+                  <span className="absolute right-4 top-4 rounded-full bg-orange-500 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-white shadow-lg">
+                    Top
+                  </span>
+                )}
+                <h3 className="text-xl font-bold text-white">{category.title}</h3>
+                <p className="mt-1 text-sm text-white/80 line-clamp-2">{category.description}</p>
+              </div>
             </Link>
             )
           })}

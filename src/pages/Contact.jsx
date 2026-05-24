@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCommentAlt, FaExternalLinkAlt, FaGlobe } from 'react-icons/fa'
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCommentAlt, FaExternalLinkAlt, FaGlobe, FaCheckCircle } from 'react-icons/fa'
 
 const Contact = () => {
   useEffect(() => {
     document.title = 'Contact Us - Cooking Boss'
   }, [])
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,12 +13,37 @@ const Contact = () => {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
-    setFormData({ name: '', email: '', subject: '', message: '' })
+    setSubmitting(true)
+    setError('')
+
+    try {
+      const response = await fetch('https://formspree.io/f/meedzvwv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setTimeout(() => setSubmitted(false), 5000)
+      } else {
+        const data = await response.json()
+        setError(data.error || 'Something went wrong. Please try again.')
+      }
+    } catch (err) {
+      setError('Failed to send message. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleChange = (e) => {
@@ -28,19 +54,19 @@ const Contact = () => {
     {
       icon: FaEnvelope,
       title: 'Email Us',
-      value: 'support@cookingboss.com',
-      link: 'mailto:support@cookingboss.com',
+      value: 'ahmed.ali.office70@gmail.com',
+      link: 'mailto:ahmed.ali.office70@gmail.com',
     },
     {
       icon: FaPhone,
       title: 'Call Us',
-      value: '+1 (555) 123-4567',
-      link: 'tel:+15551234567',
+      value: '+92 3702629117',
+      link: 'tel:+923702629117',
     },
     {
       icon: FaMapMarkerAlt,
       title: 'Location',
-      value: 'San Francisco, CA',
+      value: 'Karachi, Korangi, Pakistan',
       link: null,
     },
   ]
@@ -104,14 +130,21 @@ const Contact = () => {
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
             <h2 className="text-2xl font-bold text-(--text-primary) mb-6">Send us a Message</h2>
             {submitted ? (
-              <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
-                <p className="text-green-400">Thank you! Your message has been sent successfully.</p>
+              <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-6 text-center">
+                <FaCheckCircle className="text-green-400 text-4xl mx-auto mb-3" />
+                <p className="text-green-400 text-lg font-medium">Thank you!</p>
+                <p className="text-green-400/80 text-sm mt-1">Your message has been sent successfully.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+                    <p className="text-red-400 text-sm">{error}</p>
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm font-medium text-(--text-primary) mb-2">
-                    Name
+                    Name <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
@@ -119,13 +152,14 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent"
+                    disabled={submitting}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Your name"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-(--text-primary) mb-2">
-                    Email
+                    Email <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="email"
@@ -133,13 +167,14 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent"
+                    disabled={submitting}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="your@email.com"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-(--text-primary) mb-2">
-                    Subject
+                    Subject <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
@@ -147,30 +182,42 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent"
+                    disabled={submitting}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="What's this about?"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-(--text-primary) mb-2">
-                    Message
+                    Message <span className="text-red-400">*</span>
                   </label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    disabled={submitting}
                     rows={5}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent resize-none"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-(--text-primary) placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Your message..."
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[#ff6b6b] text-white rounded-xl hover:bg-[#ff5252] transition-colors font-medium"
+                  disabled={submitting}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[#ff6b6b] text-white rounded-xl hover:bg-[#ff5252] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#ff6b6b]"
                 >
-                  <FaPaperPlane className="text-xl" />
-                  Send Message
+                  {submitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <FaPaperPlane className="text-xl" />
+                      Send Message
+                    </>
+                  )}
                 </button>
               </form>
             )}

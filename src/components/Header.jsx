@@ -13,6 +13,7 @@ const Header = ({ onShoppingListClick }) => {
   const isActive = (path) => location.pathname === path;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchExpanded, setSearchExpanded] = useState(false);
   const { favoritesCount } = useFavorites()
   const { totalItems } = useShoppingList()
   const { theme, toggleTheme } = useTheme()
@@ -27,6 +28,16 @@ const Header = ({ onShoppingListClick }) => {
 
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value)
+    if (!searchExpanded && e.target.value) {
+      setSearchExpanded(true)
+    }
+  }
+
+  const toggleSearch = () => {
+    setSearchExpanded(!searchExpanded)
+    if (searchExpanded) {
+      setSearchQuery('')
+    }
   }
 
   return (
@@ -123,12 +134,14 @@ const Header = ({ onShoppingListClick }) => {
             <input 
               type="text" 
               id="header-search"
+              className={searchExpanded ? 'expanded' : ''}
               placeholder="Search recipes..."
               value={searchQuery}
               onChange={handleSearchInputChange}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
+              onBlur={() => !searchQuery && setSearchExpanded(false)}
             />
-            <button className="search-btn" onClick={handleSearch}>
+            <button className="search-btn" onClick={searchExpanded ? handleSearch : toggleSearch}>
               <FaSearch className="text-lg" />
             </button>
           </div>

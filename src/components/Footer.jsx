@@ -5,13 +5,43 @@ import { FaEnvelope, FaHeart, FaUtensils, FaStar, FaPaperPlane, FaExternalLinkAl
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [subscribing, setSubscribing] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (email.trim()) {
-      setSubscribed(true);
-      setEmail("");
-      setTimeout(() => setSubscribed(false), 3000);
+    if (!email.trim()) return;
+
+    setSubscribing(true);
+    setError("");
+
+    try {
+      const response = await fetch('https://formspree.io/f/mpqnlkee', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          subject: 'Newsletter Subscription',
+          message: 'User subscribed to newsletter',
+          _subject: 'New Newsletter Subscription'
+        })
+      });
+
+      if (response.ok) {
+        setSubscribed(true);
+        setEmail("");
+        setTimeout(() => setSubscribed(false), 5000);
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setError('Failed to subscribe. Please try again.');
+    } finally {
+      setSubscribing(false);
     }
   };
 
@@ -58,16 +88,32 @@ const Footer = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent"
+                  disabled={subscribing}
+                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                 />
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-[#ff6b6b] text-white rounded-xl hover:bg-[#ff5252] transition-colors flex items-center justify-center gap-2 font-medium"
+                  disabled={subscribing}
+                  className="px-6 py-3 bg-[#ff6b6b] text-white rounded-xl hover:bg-[#ff5252] transition-colors flex items-center justify-center gap-2 font-medium disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#ff6b6b]"
                 >
-                  <FaPaperPlane className="text-lg" />
-                  Subscribe
+                  {subscribing ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      Subscribing...
+                    </>
+                  ) : (
+                    <>
+                      <FaPaperPlane className="text-lg" />
+                      Subscribe
+                    </>
+                  )}
                 </button>
               </form>
+            )}
+            {error && (
+              <div className="mt-3 bg-red-500/10 border border-red-500/30 rounded-xl p-3 text-red-400 text-sm">
+                {error}
+              </div>
             )}
           </div>
         </div>

@@ -20,12 +20,12 @@ const ShoppingListPanel = ({ isOpen, onClose }) => {
     <>
       {/* Overlay */}
       <div 
-        className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm print:hidden"
+        className="fixed inset-0 bg-black/50 z-[1001] backdrop-blur-sm print:hidden"
         onClick={onClose}
       />
       
       {/* Panel */}
-      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-slate-900 z-50 shadow-2xl transform transition-transform duration-300 ease-out print:hidden">
+      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-slate-900 z-[1002] shadow-2xl transform transition-transform duration-300 ease-out print:hidden">
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-white/10">
